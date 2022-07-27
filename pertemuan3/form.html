@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belajar Form</title>
+</head>
+<body>
+    <form action="" method="post">
+        Nama Depan : <input type="text" name="txtnama" id="namaDepan"><br>
+        Nama Belakang : <input type="text" name="txtnama2" id="namaBelakang"><br>
+        Password : <input type="password" name="password" id="password"><br>
+        Alamat : <textarea name="txtalamat" id="alamat" cols="30" rows="5"> </textarea><br>
+        Olahraga Favorit : <input type="checkbox" name="pilih1" value="sepakbola">Sepakbola &nbsp;&nbsp;
+        <input type="checkbox" name="pilih2" value="bt">Bulu Tangkis &nbsp;&nbsp;
+        <input type="checkbox" name="pilih3" value="tenis">Tenis &nbsp;&nbsp;
+        <br>
+        
+        Jenis Kelamin : <input type="radio" name="jenkel" value="P">Pria  &nbsp;&nbsp;
+        <input type="radio" name="jenkel" value="W">Wanita  &nbsp;&nbsp;
+        <br>
+
+        Olahraga : <select name="olahraga" id="olahraga">
+            <option value="sepakbolah">Sepakbola</option>
+            <option value="bulutangkis">Bulu Tangkis</option>
+            <option value="tenis" selected>Tenis</option>
+            <option value="tenis meja">Tenis Meja</option>
+        </select>
+
+        <br>
+        <input type="submit" value="save" name="tblSimpan">
+        <input type="reset" value="reset" name="tblReset">
+    </form>
+</body>
+</html>
