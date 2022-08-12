@@ -1,5 +1,5 @@
 <?php
-include '../controller/config.php';
+include '../controller/koneksi.php';
 
 if (!isset($_SESSION['user'])) {
   header("Location: login.php");
@@ -54,7 +54,7 @@ if (!isset($_SESSION['user'])) {
             <use xlink:href="../vendor/coreUI/vendors/@coreui/icons/svg/free.svg#cil-monitor"></use>
           </svg> Master</a>
         <ul class="nav-group-items">
-          <li class="nav-item"><a class="nav-link" href="users.php"><i class="bi bi-people-fill" style="margin-right: 10px;"></i> Data User</a></li>
+          <li class="nav-item"><a class="nav-link" href="anggota.php"><i class="bi bi-people-fill" style="margin-right: 10px;"></i> Data Anggota</a></li>
           <li class="nav-item"><a class="nav-link" href="buku.php"><i class="bi bi-book-half" style="margin-right: 10px;"></i> Data Buku</a></li>
         </ul>
       </li>
@@ -105,7 +105,7 @@ if (!isset($_SESSION['user'])) {
         </a>
         <!-- <ul class="header-nav d-none d-md-flex">
           <li class="nav-item"><a class="nav-link active" href="#">Dashboard</a></li>
-          <li class="nav-item"><a class="nav-link" href="users.php">Users</a></li>
+          <li class="nav-item"><a class="nav-link" href="anggota.php">Users</a></li>
           <li class="nav-item"><a class="nav-link" href="buku.php">Buku</a></li>
           <li class="nav-item"><a class="nav-link" href="profile.php">Profile</a></li>
         </ul> -->

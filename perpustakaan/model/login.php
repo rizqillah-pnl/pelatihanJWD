@@ -1,5 +1,5 @@
 <?php
-include '../controller/config.php';
+include '../controller/koneksi.php';
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if (isset($_POST['login'])) {

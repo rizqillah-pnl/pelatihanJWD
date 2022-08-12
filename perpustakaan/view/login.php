@@ -1,6 +1,6 @@
 <?php
 
-include '../controller/config.php';
+include '../controller/koneksi.php';
 
 if (isset($_SESSION['user'])) {
   header("Location: index.php");
