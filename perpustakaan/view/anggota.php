@@ -22,6 +22,9 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
 
 $anggota = mysqli_query($conn, "SELECT * FROM tb_anggota LIMIT $awalData, $jumlahDataPerHalaman");
 
+
+$kode = $_SESSION['user']['id'];
+$result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id='$kode'"));
 ?>
 
 <!DOCTYPE html>
@@ -150,48 +153,7 @@ $anggota = mysqli_query($conn, "SELECT * FROM tb_anggota LIMIT $awalData, $jumla
     <!-- MAIN SECTION -->
     <div class="wrapper d-flex flex-column min-vh-100 bg-light">
         <header class="header header-sticky mb-4">
-            <div class="container-fluid">
-                <button class="header-toggler px-md-0 me-md-3" type="button" onclick="coreui.Sidebar.getInstance(document.querySelector('#sidebar')).toggle()">
-                    <svg class="icon icon-lg">
-                        <use xlink:href="../vendor/coreUI/vendors/@coreui/icons/svg/free.svg#cil-menu"></use>
-                    </svg>
-                </button>
-                <a class="header-brand d-md-none" href="index.php">
-                    <div>
-                        Data Anggota
-                        <i class="bi bi-book" style="font-size: 20px;"></i>
-                    </div>
-                </a>
-                <div class="header-nav d-none d-md-flex ms-auto" style="font-size: 25px;">
-                    Data Anggota
-                    <i class="bi bi-book" style="font-size: 20px; margin-left: 10px;"></i>
-                </div>
-                <ul class="header-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#">
-                            <svg class="icon icon-lg">
-                                <use xlink:href="../vendor/coreUI/vendors/@coreui/icons/svg/free.svg#cil-bell"></use>
-                            </svg></a>
-                    </li>
-                </ul>
-                <ul class="header-nav ms-3">
-                    <li class="nav-item dropdown"><a class="nav-link py-0" data-coreui-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                            <div class="avatar avatar-md"><img class="avatar-img" src="../public/img/user/<?= $result['foto']; ?>" alt="user@email.com"></div>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end pt-0">
-                            <a class="dropdown-item mt-3" href="profile.php">
-                                <svg class="icon me-2">
-                                    <use xlink:href="../vendor/coreUI/vendors/@coreui/icons/svg/free.svg#cil-user"></use>
-                                </svg> Profile</a>
-                            <div class="dropdown-divider"></div>
-                            <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Logout">
-                                <svg class="icon me-2">
-                                    <use xlink:href="../vendor/coreUI/vendors/@coreui/icons/svg/free.svg#cil-account-logout"></use>
-                                </svg> Logout
-                            </button>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+            <?php include 'header.php'; ?>
             <div class="header-divider"></div>
             <div class="container-fluid">
                 <nav aria-label="breadcrumb">
