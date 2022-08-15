@@ -15,7 +15,7 @@ function upload($path)
     }
 
     // cek apakah yang diupload adalah gambar
-    $ekstensiGambarValid = ['jpg', 'jpeg', 'png'];
+    $ekstensiGambarValid = ['jpg', 'jpeg', 'png', 'tiff', 'svg', 'webp', 'jfif', 'ico', 'svgz'];
     $ekstensiGambar = explode('.', $namaFile);
     $ekstensiGambar = strtolower(end($ekstensiGambar));
     if (!in_array($ekstensiGambar, $ekstensiGambarValid)) {
@@ -23,7 +23,7 @@ function upload($path)
     }
 
     // cek jika ukurannya terlalu besar
-    if ($ukuranFile > 2000000) {
+    if ($ukuranFile > 2080000) {
         return false;
     }
 

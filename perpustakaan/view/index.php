@@ -4,6 +4,8 @@ include '../controller/koneksi.php';
 if (!isset($_SESSION['user'])) {
   header("Location: login.php");
 }
+
+$hak_akses = $_SESSION['user']['hak_akses'];
 ?>
 
 <!DOCTYPE html>
@@ -56,6 +58,9 @@ if (!isset($_SESSION['user'])) {
         <ul class="nav-group-items">
           <li class="nav-item"><a class="nav-link" href="anggota.php"><i class="bi bi-people-fill" style="margin-right: 10px;"></i> Data Anggota</a></li>
           <li class="nav-item"><a class="nav-link" href="buku.php"><i class="bi bi-book-half" style="margin-right: 10px;"></i> Data Buku</a></li>
+          <?php if ($hak_akses == "1") : ?>
+            <li class="nav-item"><a class="nav-link" href="users.php"><i class="bi bi-person-fill" style="margin-right: 10px;"></i> Data Users</a></li>
+          <?php endif; ?>
         </ul>
       </li>
       <!-- <li class="nav-title">Data Transaksi</li> -->

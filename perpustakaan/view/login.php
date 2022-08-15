@@ -43,7 +43,7 @@ if (isset($_SESSION['user'])) {
             <div class="card col-md-7 p-4 mb-0">
               <div class="card-body">
                 <h1 class="text-center">Login</h1>
-                <p class="text-medium-emphasis text-center mb-5">Login ke Akunmu!</p>
+                <p class="text-medium-emphasis text-center mb-5">Sign in With Your Account!</p>
                 <form action="../model/login.php" method="post">
                   <div class="input-group mb-3"><span class="input-group-text">
                       <svg class="icon">

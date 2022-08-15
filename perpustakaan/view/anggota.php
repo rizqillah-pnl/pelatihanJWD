@@ -5,6 +5,14 @@ if (!isset($_SESSION['user'])) {
     header("Location: login.php");
 }
 
+$id = $_SESSION['user']['id'];
+$us = mysqli_query($conn, "SELECT * FROM tb_user WHERE id='$id'");
+$result = mysqli_fetch_assoc($us);
+
+
+
+$hak_akses = $_SESSION['user']['hak_akses'];
+
 $jumlahDataPerHalaman = 5;
 $jumData = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) FROM tb_anggota"));
 $jumlahHalaman = ceil($jumData['COUNT(*)'] / $jumlahDataPerHalaman);
@@ -13,7 +21,6 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
 
 
 $anggota = mysqli_query($conn, "SELECT * FROM tb_anggota LIMIT $awalData, $jumlahDataPerHalaman");
-
 
 ?>
 
@@ -44,9 +51,40 @@ $anggota = mysqli_query($conn, "SELECT * FROM tb_anggota LIMIT $awalData, $jumla
                     button: false,
                 });
             </script>
+        <?php elseif ($pesan == 201) : ?>
+            <script>
+                swal("Berhasil!", `Data Anggota Berhasil Diedit!`, "success", {
+                    timer: 2000,
+                    button: false,
+                });
+            </script>
+        <?php elseif ($pesan == 301) : ?>
+            <script>
+                swal("Gagal!", `Data Anggota Gagal Diedit!`, "error", {
+                    timer: 2000,
+                    button: false,
+                });
+            </script>
+        <?php elseif ($pesan == 202) : ?>
+            <script>
+                let nama = '<?= $_SESSION['nama']; ?>'
+                swal("Berhasil!", `Data ${nama} Berhasil Dihapus!`, "success", {
+                    timer: 2500,
+                    button: false,
+                });
+            </script>
+        <?php elseif ($pesan == 302) : ?>
+            <script>
+                let nama = '<?= $_SESSION['nama']; ?>'
+                swal("Gagal!", `Data ${nama} Gagal Dihapus!`, "error", {
+                    timer: 2500,
+                    button: false,
+                });
+            </script>
         <?php endif; ?>
     <?php endif;
     unset($_SESSION['pesan']);
+    unset($_SESSION['nama']);
     ?>
 
     <div class="sidebar sidebar-dark sidebar-fixed" id="sidebar">
@@ -73,6 +111,10 @@ $anggota = mysqli_query($conn, "SELECT * FROM tb_anggota LIMIT $awalData, $jumla
                 <ul class="nav-group-items">
                     <li class="nav-item"><a class="nav-link active" href="anggota.php"><i class="bi bi-people-fill" style="margin-right: 10px;"></i> Data Anggota</a></li>
                     <li class="nav-item"><a class="nav-link" href="buku.php"><i class="bi bi-book-half" style="margin-right: 10px;"></i> Data Buku</a></li>
+                    <?php if ($hak_akses == "1") : ?>
+                        <li class="nav-item"><a class="nav-link" href="users.php"><i class="bi bi-person-fill" style="margin-right: 10px;"></i> Data Users</a></li>
+                    <?php endif; ?>
+
                 </ul>
             </li>
             <!-- <li class="nav-title">Data Transaksi</li> -->
@@ -133,7 +175,7 @@ $anggota = mysqli_query($conn, "SELECT * FROM tb_anggota LIMIT $awalData, $jumla
                 </ul>
                 <ul class="header-nav ms-3">
                     <li class="nav-item dropdown"><a class="nav-link py-0" data-coreui-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                            <div class="avatar avatar-md"><img class="avatar-img" src="../vendor/coreUI/assets/img/avatars/2.jpg" alt="user@email.com"></div>
+                            <div class="avatar avatar-md"><img class="avatar-img" src="../public/img/user/<?= $result['foto']; ?>" alt="user@email.com"></div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end pt-0">
                             <a class="dropdown-item mt-3" href="profile.php">
@@ -165,14 +207,14 @@ $anggota = mysqli_query($conn, "SELECT * FROM tb_anggota LIMIT $awalData, $jumla
             </div>
         </header>
         <div class="body flex-grow-1 px-3">
-            <div class="container-lg">
+            <div class="container-fluid">
                 <!-- /.row-->
-                <div class="card mb-4">
+                <div class="card mb-5">
                     <div class="card-body">
                         <div>
                             <h2 class="card-title mb-0">Data Anggota</h2>
                         </div>
-                        <div class="container mt-4">
+                        <div class="container-fluid mt-4">
                             <div class="col-lg mb-2">
                                 <div class="mb-0">
                                     <button type="button" class="btn btn-primary text-white text-center mb-2" data-bs-toggle="modal" data-bs-target="#TambahUser"><i class="mdi mdi-account-plus"></i> Tambah Anggota</button>
@@ -192,6 +234,7 @@ $anggota = mysqli_query($conn, "SELECT * FROM tb_anggota LIMIT $awalData, $jumla
                                                             <div class="col-sm-8" id="previewimg">
                                                                 <input type="file" name="foto" id="foto" class="form-control" required onchange="validateImg(this, 'tambah', 'foto', 'previewimg', 'fotoFeedback')" aria-describedby="fotoFeedback" accept="image/*">
                                                                 <div id="fotoFeedback" class="invalid-feedback"></div>
+                                                                <div class="form-text text-info">Gambar maksimal 2MB</div>
                                                             </div>
                                                         </div>
                                                         <div class="mb-3 row">
@@ -230,7 +273,7 @@ $anggota = mysqli_query($conn, "SELECT * FROM tb_anggota LIMIT $awalData, $jumla
                                     </div>
                                     <!-- End Modal Tambah -->
 
-                                    <button type="button" class="btn btn-secondary text-white text-center mb-2" data-bs-toggle="modal" data-bs-target="#cetak"><i class="mdi mdi-account-plus"></i> Cetak Anggota</button>
+                                    <button type="button" class="btn btn-secondary text-white text-center mb-2" data-bs-toggle="modal" data-bs-target="#cetak"><i class="mdi mdi-account-plus"></i> Cetak Data Anggota</button>
                                 </div>
                             </div>
 
@@ -238,46 +281,66 @@ $anggota = mysqli_query($conn, "SELECT * FROM tb_anggota LIMIT $awalData, $jumla
                                 <div class="d-flex flex-row-reverse mb-3">
                                     <input type="text" style="height: 35px; width: 100%;" name="search" id="search" placeholder="Search . . ." autocomplete="off" class="form-control" autofocus>
                                 </div>
+
+                                <script>
+                                    $(document).ready(function() {
+                                        $('#search').on('keyup', function() {
+                                            let search = $('#search').val();
+
+                                            $.get('ajax-view/anggota.php?search=' + search, function(data) {
+                                                $('#table-anggota').html(data);
+                                            })
+                                            // $.get('../public/ajax/user.php?keyword=' + cari, function(data) {
+                                            //     $('#container').html(data);
+                                            // });
+                                        });
+                                    });
+                                </script>
                             </div>
-                            <div class="col table-responsive">
+                            <div class="col table-responsive" id="table-anggota">
                                 <table class="table table-hover ">
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Id Anggota</th>
-                                            <th>Nama</th>
-                                            <th>Foto</th>
-                                            <th>Jenis Kelamin</th>
-                                            <th>Alamat</th>
-                                            <th>Nomor HP</th>
-                                            <th>Opsi</th>
+                                            <th class="text-center">Id Anggota</th>
+                                            <th class="text-center">Nama</th>
+                                            <th class="text-center">Foto</th>
+                                            <th class="text-center">Jenis Kelamin</th>
+                                            <th class="text-center">Alamat</th>
+                                            <th class="text-center">Nomor HP</th>
+                                            <th class="text-center">Opsi</th>
                                         </tr>
                                     </thead>
                                     <tbody class="table-group-divider">
-                                        <?php $no = $awalData; ?>
-                                        <?php foreach ($anggota as $row) : ?>
+                                        <?php if (mysqli_num_rows($anggota) != 0) : ?>
+                                            <?php $no = $awalData; ?>
+                                            <?php foreach ($anggota as $row) : ?>
+                                                <tr>
+                                                    <td class="text-center"><?= $no = $no + 1; ?></td>
+                                                    <td>AG<?= $row['id_anggota']; ?></td>
+                                                    <td class="text-wrap" style="width: 200px;"><?= $row['nama']; ?></td>
+                                                    <td class="text-center"><img src="../public/img/anggota/<?= $row['foto']; ?>" alt="Profil <?= $row['nama']; ?>" width="80" height="80"></td>
+                                                    <td class="text-center"><?= ($row['jkel'] == "L") ? "Laki-laki" : "Perempuan"; ?></td>
+                                                    <td class="text-wrap" style="width: 250px; text-align: justify;"><?= $row['alamat']; ?></td>
+                                                    <td><?= $row['nohp']; ?></td>
+                                                    <td class="text-center">
+                                                        <button class="btn btn-success text-white mb-2" data-bs-toggle="modal" data-bs-target="#Cetak<?= $row['id_anggota']; ?>">Cetak Kartu</button>
+                                                        <button class="btn btn-warning text-white mb-2" data-bs-toggle="modal" data-bs-target="#Edit<?= $row['id_anggota']; ?>">Edit</button>
+                                                        <button class="btn btn-danger text-white mb-2" data-bs-toggle="modal" data-bs-target="#Hapus<?= $row['id_anggota']; ?>">Hapus</button>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        <?php else : ?>
                                             <tr>
-                                                <td><?= $no = $no + 1; ?></td>
-                                                <td>AGT<?= $row['id_anggota']; ?></td>
-                                                <td><?= $row['nama']; ?></td>
-                                                <td><img src="../public/img/anggota/<?= $row['foto']; ?>" alt="Profil <?= $row['nama']; ?>" width="80" height="80"></td>
-                                                <td><?= ($row['jkel'] == "L") ? "Laki-laki" : "Perempuan"; ?></td>
-                                                <td><?= $row['alamat']; ?></td>
-                                                <td><?= $row['nohp']; ?></td>
-                                                <td>
-                                                    <button class="btn btn-success text-white" data-bs-toggle="modal" data-bs-target="#Cetak<?= $row['id_anggota']; ?>">Cetak Kartu</button>
-                                                    <button class="btn btn-warning text-white" data-bs-toggle="modal" data-bs-target="#Edit<?= $row['id_anggota']; ?>">Edit</button>
-                                                    <button class="btn btn-danger text-white" data-bs-toggle="modal" data-bs-target="#Hapus<?= $row['id_anggota']; ?>">Hapus</button>
-                                                </td>
+                                                <td colspan="8" class="text-center fw-bold text-secondary">Data Kosong!</td>
                                             </tr>
-                                        <?php endforeach; ?>
+                                        <?php endif; ?>
                                     </tbody>
                                 </table>
-                            </div>
-                            <div class="mt-4">
                                 <?php $jumData = mysqli_query($conn, "SELECT * FROM tb_anggota"); ?>
                                 <span class="ms-auto">Showing <?= mysqli_num_rows($anggota); ?> Data of <?= mysqli_num_rows($jumData); ?>.</span>
-
+                            </div>
+                            <div class="mt-4">
                                 <?php if (mysqli_num_rows($jumData) > 5) : ?>
                                     <div class="col">
                                         <ul class="pagination d-flex justify-content-end">
@@ -343,6 +406,7 @@ $anggota = mysqli_query($conn, "SELECT * FROM tb_anggota LIMIT $awalData, $jumla
                                 <div class="col-sm-8" id="preview<?= $row['id_anggota']; ?>">
                                     <input type="file" name="foto" id="foto<?= $row['id_anggota']; ?>" class="form-control" onchange="validateImg(this, 'edit', 'foto<?= $row['id_anggota']; ?>', 'preview<?= $row['id_anggota']; ?>', 'fotoFeedback<?= $row['id_anggota']; ?>')" aria-describedby="fotoFeedback" accept="image/*">
                                     <div id="fotoFeedback<?= $row['id_anggota']; ?>" class="invalid-feedback"></div>
+                                    <div class="form-text text-info">Gambar maksimal 2MB</div>
                                 </div>
                             </div>
                             <div class="mb-3 row">
@@ -385,6 +449,29 @@ $anggota = mysqli_query($conn, "SELECT * FROM tb_anggota LIMIT $awalData, $jumla
             </div>
         </div>
         <!-- End Modal Edit -->
+
+        <!-- Modal Delete -->
+        <div class="modal fade " id="Hapus<?= $row['id_anggota']; ?>" tabindex="-1" aria-labelledby="HapusLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="HapusLabel">Hapus Anggota</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Anda yakin ingin menghapus anggota dengan nama <strong><?= $row['nama']; ?></strong>?
+                    </div>
+                    <div class="modal-footer">
+                        <form action="../model/delete-anggota.php" method="POST">
+                            <input type="hidden" name="id" value="<?= $row['id_anggota']; ?>">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                            <button type="submit" name="hapus" class="btn btn-danger text-white">Hapus</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Modal Delete -->
     <?php endforeach; ?>
 
 
