@@ -16,16 +16,16 @@
           <li class="nav-item"><a class="nav-link" href="buku.php">Buku</a></li>
           <li class="nav-item"><a class="nav-link" href="profile.php">Profile</a></li>
         </ul> -->
-    <div class="header-nav d-none d-md-flex ms-auto" style="font-size: 25px;">
+    <div class="header-nav d-none d-md-flex mx-auto" style="font-size: 25px;">
         RZQ Perpustakaan
         <i class="bi bi-book" style="font-size: 20px; margin-left: 10px;"></i>
     </div>
-    <ul class="header-nav ms-auto">
+    <!-- <ul class="header-nav ms-auto">
         <li class="nav-item"><a class="nav-link" href="#">
                 <svg class="icon icon-lg">
                     <use xlink:href="../vendor/coreUI/vendors/@coreui/icons/svg/free.svg#cil-bell"></use>
-                </svg></a></li>
-        <!-- <li class="nav-item"><a class="nav-link" href="#">
+                </svg></a></li> -->
+    <!-- <li class="nav-item"><a class="nav-link" href="#">
               <svg class="icon icon-lg">
                 <use xlink:href="../vendor/coreUI/vendors/@coreui/icons/svg/free.svg#cil-list-rich"></use>
               </svg></a></li>
@@ -33,7 +33,7 @@
               <svg class="icon icon-lg">
                 <use xlink:href="../vendor/coreUI/vendors/@coreui/icons/svg/free.svg#cil-envelope-open"></use>
               </svg></a></li> -->
-    </ul>
+    <!-- </ul> -->
     <ul class="header-nav ms-3">
         <li class="nav-item dropdown"><a class="nav-link py-0" data-coreui-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                 <span style="margin-right: 7px;"><?= $result['nama']; ?></span>
