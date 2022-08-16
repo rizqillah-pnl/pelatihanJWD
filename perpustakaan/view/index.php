@@ -1,5 +1,6 @@
 <?php
 include '../controller/koneksi.php';
+include '../model/getAPI.php';
 
 if (!isset($_SESSION['user'])) {
   header("Location: login.php");
@@ -9,6 +10,7 @@ $hak_akses = $_SESSION['user']['hak_akses'];
 $kode = $_SESSION['user']['id'];
 
 $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id='$kode'"));
+
 ?>
 
 
@@ -148,131 +150,8 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
             </div>
           </div>
         </div>
-        <!-- /.card.mb-4-->
-        <div class="row">
-          <div class="col-sm-6 col-lg-4">
-            <div class="card mb-4" style="--cui-card-cap-bg: #3b5998">
-              <div class="card-header position-relative d-flex justify-content-center align-items-center">
-                <svg class="icon icon-3xl text-white my-4">
-                  <use xlink:href="../vendor/coreUI/vendors/@coreui/icons/svg/brand.svg#cib-facebook-f"></use>
-                </svg>
-                <div class="chart-wrapper position-absolute top-0 start-0 w-100 h-100">
-                  <canvas id="social-box-chart-1" height="90"></canvas>
-                </div>
-              </div>
-              <div class="card-body row text-center">
-                <div class="col">
-                  <div class="fs-5 fw-semibold">89k</div>
-                  <div class="text-uppercase text-medium-emphasis small">friends</div>
-                </div>
-                <div class="vr"></div>
-                <div class="col">
-                  <div class="fs-5 fw-semibold">459</div>
-                  <div class="text-uppercase text-medium-emphasis small">feeds</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- /.col-->
-          <div class="col-sm-6 col-lg-4">
-            <div class="card mb-4" style="--cui-card-cap-bg: #00aced">
-              <div class="card-header position-relative d-flex justify-content-center align-items-center">
-                <svg class="icon icon-3xl text-white my-4">
-                  <use xlink:href="../vendor/coreUI/vendors/@coreui/icons/svg/brand.svg#cib-twitter"></use>
-                </svg>
-                <div class="chart-wrapper position-absolute top-0 start-0 w-100 h-100">
-                  <canvas id="social-box-chart-2" height="90"></canvas>
-                </div>
-              </div>
-              <div class="card-body row text-center">
-                <div class="col">
-                  <div class="fs-5 fw-semibold">973k</div>
-                  <div class="text-uppercase text-medium-emphasis small">followers</div>
-                </div>
-                <div class="vr"></div>
-                <div class="col">
-                  <div class="fs-5 fw-semibold">1.792</div>
-                  <div class="text-uppercase text-medium-emphasis small">tweets</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- /.col-->
 
-          <?php
-          $url = "https://api.github.com/search/users?q=rizqillah-pnl";
-          $opts = [
-            'http' => [
-              'method' => 'GET',
-              'header' => [
-                'User-Agent: PHP',
-                // 'Authorization: Bearer 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'
-              ]
-            ]
-          ];
 
-          $json = file_get_contents($url, false, stream_context_create($opts));
-          $obj = json_decode($json, 1);
-          ?>
-          <div class="col-sm-6 col-lg-4">
-            <div class="card mb-4" style="--cui-card-cap-bg: #24292f">
-              <div class="card-header position-relative d-flex justify-content-center align-items-center">
-                <svg class="icon icon-3xl text-white my-4">
-                  <use xlink:href="../vendor/coreUI/vendors/@coreui/icons/svg/brand.svg#cib-github"></use>
-                </svg>
-                <div class="chart-wrapper position-absolute top-0 ms-auto w-100 h-100">
-                  <a href="<?= $obj['items'][0]['html_url']; ?>">
-                    <img src="<?= $obj['items'][0]['avatar_url']; ?>" alt="" height="60">
-                  </a>
-                </div>
-              </div>
-              <?php
-              $url2 = "https://api.github.com/users/rizqillah-pnl/followers";
-              $opts = [
-                'http' => [
-                  'method' => 'GET',
-                  'header' => [
-                    'User-Agent: PHP',
-                    // 'Authorization: Bearer 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'
-                  ]
-                ]
-              ];
-
-              $json = file_get_contents($url2, false, stream_context_create($opts));
-              $obj2 = json_decode($json);
-              ?>
-              <div class="card-body row text-center">
-                <div class="col">
-                  <div class="fs-5 fw-semibold"><?= count($obj2); ?></div>
-                  <div class="text-uppercase text-medium-emphasis small">Followers</div>
-                </div>
-                <div class="vr"></div>
-
-                <?php
-                $url3 = "https://api.github.com/users/rizqillah-pnl/repos";
-                $opts = [
-                  'http' => [
-                    'method' => 'GET',
-                    'header' => [
-                      'User-Agent: PHP',
-                      // 'Authorization: Bearer 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'
-                    ]
-                  ]
-                ];
-
-                $json = file_get_contents($url3, false, stream_context_create($opts));
-                $obj3 = json_decode($json, 1);
-                ?>
-                <div class="col">
-                  <div class="fs-5 fw-semibold"><?= count($obj3); ?></div>
-                  <div class="text-uppercase text-medium-emphasis small">Repo</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- /.col-->
-        </div>
-        <!-- /.row-->
         <div class="row">
           <div class="col-md-12">
             <div class="card mb-4">
@@ -775,8 +654,104 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
           <!-- /.col-->
         </div>
         <!-- /.row-->
+
+
+        <!-- MEDSOS -->
+        <!-- /.card.mb-4-->
+        <div class="row" id="medsos">
+          <?php
+          // include '../../model/getAPI.php';
+          $tokenGitHub = "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";
+
+          $url = "https://api.github.com/search/users?q=rizqillah-pnl";
+          $obj = getData($url, $tokenGitHub);
+
+          $url2 = "https://api.github.com/users/rizqillah-pnl/followers";
+          $obj2 = getData($url2, $tokenGitHub);
+
+          $url3 = "https://api.github.com/users/rizqillah-pnl/repos";
+          $obj3 = getData($url3, $tokenGitHub);
+
+          ?>
+
+          <!-- <div class="col-sm-6 col-lg-4">
+            <div class="card mb-4" style="--cui-card-cap-bg: #3b5998">
+              <div class="card-header position-relative d-flex justify-content-center align-items-center">
+                <svg class="icon icon-3xl text-white my-4">
+                  <use xlink:href="../vendor/coreUI/vendors/@coreui/icons/svg/brand.svg#cib-facebook-f"></use>
+                </svg>
+                <div class="chart-wrapper position-absolute top-0 start-0 w-100 h-100">
+                  <canvas id="social-box-chart-1" height="90"></canvas>
+                </div>
+              </div>
+              <div class="card-body row text-center">
+                <div class="col">
+                  <div class="fs-5 fw-semibold">89k</div>
+                  <div class="text-uppercase text-medium-emphasis small">friends</div>
+                </div>
+                <div class="vr"></div>
+                <div class="col">
+                  <div class="fs-5 fw-semibold">459</div>
+                  <div class="text-uppercase text-medium-emphasis small">feeds</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-lg-4">
+            <div class="card mb-4" style="--cui-card-cap-bg: #C13584">
+              <div class="card-header position-relative d-flex justify-content-center align-items-center">
+                <svg class="icon icon-3xl text-white my-4">
+                  <use xlink:href="../vendor/coreUI/vendors/@coreui/icons/svg/brand.svg#cib-instagram"></use>
+                </svg>
+                <div class="chart-wrapper position-absolute top-0 start-0 w-100 h-100">
+                  <canvas id="social-box-chart-2" height="90"></canvas>
+                </div>
+              </div>
+              <div class="card-body row text-center">
+                <div class="col">
+                  <div class="fs-5 fw-semibold">973k</div>
+                  <div class="text-uppercase text-medium-emphasis small">Followers</div>
+                </div>
+                <div class="vr"></div>
+                <div class="col">
+                  <div class="fs-5 fw-semibold">1.792</div>
+                  <div class="text-uppercase text-medium-emphasis small">Feed</div>
+                </div>
+              </div>
+            </div>
+          </div> -->
+          <!-- /.col-->
+          <div class="col-sm-6 col-lg-4 mx-auto">
+            <div class="card mb-4" style="--cui-card-cap-bg: #24292f">
+              <div class="card-header position-relative d-flex justify-content-center align-items-center">
+                <svg class="icon icon-3xl text-white my-4">
+                  <use xlink:href="../vendor/coreUI/vendors/@coreui/icons/svg/brand.svg#cib-github"></use>
+                </svg>
+                <div class="chart-wrapper position-absolute top-0 ms-auto w-100 h-100">
+                  <a href="<?= $obj['items'][0]['html_url']; ?>" target="_blank">
+                    <img src="<?= $obj['items'][0]['avatar_url']; ?>" alt="" height="60">
+                  </a>
+                </div>
+              </div>
+              <div class="card-body row text-center">
+                <div class="col">
+                  <div class="fs-5 fw-semibold"><?= count($obj2); ?></div>
+                  <div class="text-uppercase text-medium-emphasis small">Followers</div>
+                </div>
+                <div class="vr"></div>
+                <div class="col">
+                  <div class="fs-5 fw-semibold"><?= count($obj3); ?></div>
+                  <div class="text-uppercase text-medium-emphasis small">Repo</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /.col-->
+        </div>
+        <!-- /.row-->
       </div>
     </div>
+
     <footer class="footer">
       <div><a href="https://github.com/rizqillah-pnl" target="_blank" style="text-decoration: none;">RIZQILLAH</a></div>
       <div class="ms-auto">&copy; 2022 All Right Reserved</div>
