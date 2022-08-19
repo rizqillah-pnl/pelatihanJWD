@@ -5,12 +5,6 @@ if (!isset($_SESSION['user'])) {
     header("Location: login.php");
 }
 
-$id = $_SESSION['user']['id'];
-$us = mysqli_query($conn, "SELECT * FROM tb_user WHERE id='$id'");
-$result = mysqli_fetch_assoc($us);
-
-
-
 $hak_akses = $_SESSION['user']['hak_akses'];
 
 $jumlahDataPerHalaman = 5;

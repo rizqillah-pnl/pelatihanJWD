@@ -5,12 +5,6 @@ if (!isset($_SESSION['user'])) {
     header("Location: login.php");
 }
 
-$id = $_SESSION['user']['id'];
-$us = mysqli_query($conn, "SELECT * FROM tb_user WHERE id='$id'");
-$result = mysqli_fetch_assoc($us);
-
-
-
 $hak_akses = $_SESSION['user']['hak_akses'];
 
 $jumlahDataPerHalaman = 5;
@@ -235,7 +229,7 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
                                     </div>
                                     <!-- End Modal Tambah -->
 
-                                    <button type="button" class="btn btn-secondary text-white text-center mb-2" data-bs-toggle="modal" data-bs-target="#cetak"><i class="mdi mdi-account-plus"></i> Cetak Data Anggota</button>
+                                    <a href="print/cetak.php" target="_blank" class="btn btn-secondary text-white text-center mb-2"><i class="mdi mdi-account-plus"></i> Cetak Data Anggota</a>
                                 </div>
                             </div>
 
@@ -279,7 +273,7 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
                                             <?php foreach ($anggota as $row) : ?>
                                                 <tr>
                                                     <td class="text-center"><?= $no = $no + 1; ?></td>
-                                                    <td>AG<?= $row['id_anggota']; ?></td>
+                                                    <td>AG0<?= $row['id_anggota']; ?></td>
                                                     <td class="text-wrap" style="width: 200px;"><?= $row['nama']; ?></td>
                                                     <td class="text-center"><img src="../public/img/anggota/<?= $row['foto']; ?>" alt="Profil <?= $row['nama']; ?>" width="80" height="80"></td>
                                                     <td class="text-center"><?= ($row['jkel'] == "L") ? "Laki-laki" : "Perempuan"; ?></td>
@@ -288,7 +282,7 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
                                                     <td class="text-center">
                                                         <div class="row" style="width: 170px;">
                                                             <div class="col">
-                                                                <button class="btn btn-success text-white mb-2" data-bs-toggle="modal" data-bs-target="#Cetak<?= $row['id_anggota']; ?>"><i class="bi bi-printer"></i></button>
+                                                                <a href="print/cetak.php?id=<?= $row['id_anggota']; ?>" name="id-card" class="btn btn-success text-white mb-2" target="_blank"><i class="bi bi-printer"></i></a>
                                                                 <button class="btn btn-warning text-white mb-2" data-bs-toggle="modal" data-bs-target="#Edit<?= $row['id_anggota']; ?>"><i class="bi bi-pencil"></i></button>
                                                                 <button class="btn btn-danger text-white mb-2" data-bs-toggle="modal" data-bs-target="#Hapus<?= $row['id_anggota']; ?>"><i class="bi bi-trash"></i></button>
                                                             </div>

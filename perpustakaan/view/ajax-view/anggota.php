@@ -44,7 +44,7 @@ $anggota = mysqli_query($conn, $sql);
             <?php foreach ($anggota as $row) : ?>
                 <tr>
                     <td class="text-center"><?= $no = $no + 1; ?></td>
-                    <td>AG<?= $row['id_anggota']; ?></td>
+                    <td>AG0<?= $row['id_anggota']; ?></td>
                     <td class="text-wrap" style="width: 200px;"><?= $row['nama']; ?></td>
                     <td class="text-center"><img src="../public/img/anggota/<?= $row['foto']; ?>" alt="Profil <?= $row['nama']; ?>" width="80" height="80"></td>
                     <td class="text-center"><?= ($row['jkel'] == "L") ? "Laki-laki" : "Perempuan"; ?></td>
@@ -53,7 +53,7 @@ $anggota = mysqli_query($conn, $sql);
                     <td class="text-center">
                         <div class="row" style="width: 170px;">
                             <div class="col">
-                                <button class="btn btn-success text-white mb-2" data-bs-toggle="modal" data-bs-target="#Cetak<?= $row['id_anggota']; ?>"><i class="bi bi-printer"></i></button>
+                                <a href="print/cetak.php?id=<?= $row['id_anggota']; ?>" name="id-card" class="btn btn-success text-white mb-2" target="_blank"><i class="bi bi-printer"></i></a>
                                 <button class="btn btn-warning text-white mb-2" data-bs-toggle="modal" data-bs-target="#Edit<?= $row['id_anggota']; ?>"><i class="bi bi-pencil"></i></button>
                                 <button class="btn btn-danger text-white mb-2" data-bs-toggle="modal" data-bs-target="#Hapus<?= $row['id_anggota']; ?>"><i class="bi bi-trash"></i></button>
                             </div>
@@ -63,7 +63,7 @@ $anggota = mysqli_query($conn, $sql);
             <?php endforeach; ?>
         <?php else : ?>
             <tr>
-                <td colspan="8" class="text-center fw-bold text-secondary">Data Tidak Ditemukan!</td>
+                <td colspan="8" class="text-center fw-bold text-secondary">Data Kosong!</td>
             </tr>
         <?php endif; ?>
     </tbody>
