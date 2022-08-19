@@ -35,7 +35,11 @@ function upload($path)
     $namaFileBaru .= '.';
     $namaFileBaru .= $ekstensiGambar;
 
-    move_uploaded_file($tmpName, '../public/img/' . $path . '/' . $namaFileBaru);
+    if (!file_exists('../public/img/' . $path)) {
+        mkdir('../public/img/' . $path, 0777, true);
+    }
+
+    move_uploaded_file($tmpName, '../public/img/' . $path . $namaFileBaru);
 
     return $namaFileBaru;
 }

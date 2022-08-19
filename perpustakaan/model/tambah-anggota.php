@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $alamat = validasi($_POST['alamat']);
         $nohp = validasi($_POST['nohp']);
 
-        $foto = upload('anggota');
+        $foto = upload('anggota/');
 
         $in = mysqli_query($conn, "INSERT INTO tb_anggota (nama, jkel, alamat, foto, nohp) VALUES ('$nama', '$jkel', '$alamat', '$foto', '$nohp')");
         if ($in) {

@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $alamat = validasi($_POST['alamat']);
         $nohp = validasi($_POST['nohp']);
 
-        $foto = upload('anggota');
+        $foto = upload('anggota/');
 
         if ($_FILES['foto']['error'] != "4") {
             $in = mysqli_query($conn, "UPDATE tb_anggota SET nama='$nama', jkel='$jkel', alamat='$alamat', nohp='$nohp', foto='$foto' WHERE id_anggota='$idAnggota'");

@@ -9,7 +9,7 @@ if ($search != "") {
     $halamanAktif = (isset($_GET['page'])) ? $_GET['page'] : 1;
     $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
 
-    $sql = "SELECT * FROM tb_anggota WHERE nama LIKE '%$search%' OR id_anggota LIKE '%$search%' OR alamat LIKE '%$search%' LIMIT $awalData, $jumlahDataPerHalaman";
+    $sql = "SELECT * FROM tb_anggota WHERE nama LIKE '%$search%' OR id_anggota LIKE '%$search%' OR alamat LIKE '%$search%'";
 } else {
     $jumlahDataPerHalaman = 5;
     $jumData = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_anggota"));
@@ -51,9 +51,13 @@ $anggota = mysqli_query($conn, $sql);
                     <td class="text-wrap" style="width: 250px; text-align: justify;"><?= $row['alamat']; ?></td>
                     <td><?= $row['nohp']; ?></td>
                     <td class="text-center">
-                        <button class="btn btn-success text-white mb-2" data-bs-toggle="modal" data-bs-target="#Cetak<?= $row['id_anggota']; ?>">Cetak Kartu</button>
-                        <button class="btn btn-warning text-white mb-2" data-bs-toggle="modal" data-bs-target="#Edit<?= $row['id_anggota']; ?>">Edit</button>
-                        <button class="btn btn-danger text-white mb-2" data-bs-toggle="modal" data-bs-target="#Hapus<?= $row['id_anggota']; ?>">Hapus</button>
+                        <div class="row" style="width: 170px;">
+                            <div class="col">
+                                <button class="btn btn-success text-white mb-2" data-bs-toggle="modal" data-bs-target="#Cetak<?= $row['id_anggota']; ?>"><i class="bi bi-printer"></i></button>
+                                <button class="btn btn-warning text-white mb-2" data-bs-toggle="modal" data-bs-target="#Edit<?= $row['id_anggota']; ?>"><i class="bi bi-pencil"></i></button>
+                                <button class="btn btn-danger text-white mb-2" data-bs-toggle="modal" data-bs-target="#Hapus<?= $row['id_anggota']; ?>"><i class="bi bi-trash"></i></button>
+                            </div>
+                        </div>
                     </td>
                 </tr>
             <?php endforeach; ?>

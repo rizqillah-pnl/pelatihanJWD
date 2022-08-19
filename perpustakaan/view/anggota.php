@@ -31,7 +31,7 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
 <html lang="en">
 
 <head>
-    <title>Dashboard | RZQ Perpus</title>
+    <title>Anggota | RZQ Perpus</title>
     <?php include 'meta.php'; ?>
 </head>
 
@@ -227,7 +227,7 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                                                        <button type="submit" name="tambah" id="tambah" class="btn btn-primary">Tambah</button>
+                                                        <button type="submit" name="tambah" id="tambah" class="btn btn-primary">Simpan</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -286,9 +286,13 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
                                                     <td class="text-wrap" style="width: 250px; text-align: justify;"><?= $row['alamat']; ?></td>
                                                     <td><?= $row['nohp']; ?></td>
                                                     <td class="text-center">
-                                                        <button class="btn btn-success text-white mb-2" data-bs-toggle="modal" data-bs-target="#Cetak<?= $row['id_anggota']; ?>">Cetak Kartu</button>
-                                                        <button class="btn btn-warning text-white mb-2" data-bs-toggle="modal" data-bs-target="#Edit<?= $row['id_anggota']; ?>">Edit</button>
-                                                        <button class="btn btn-danger text-white mb-2" data-bs-toggle="modal" data-bs-target="#Hapus<?= $row['id_anggota']; ?>">Hapus</button>
+                                                        <div class="row" style="width: 170px;">
+                                                            <div class="col">
+                                                                <button class="btn btn-success text-white mb-2" data-bs-toggle="modal" data-bs-target="#Cetak<?= $row['id_anggota']; ?>"><i class="bi bi-printer"></i></button>
+                                                                <button class="btn btn-warning text-white mb-2" data-bs-toggle="modal" data-bs-target="#Edit<?= $row['id_anggota']; ?>"><i class="bi bi-pencil"></i></button>
+                                                                <button class="btn btn-danger text-white mb-2" data-bs-toggle="modal" data-bs-target="#Hapus<?= $row['id_anggota']; ?>"><i class="bi bi-trash"></i></button>
+                                                            </div>
+                                                        </div>
                                                     </td>
                                                 </tr>
                                             <?php endforeach; ?>
@@ -404,7 +408,7 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                            <button type="submit" name="edit" id="edit" class="btn btn-primary">Tambah</button>
+                            <button type="submit" name="edit" id="edit" class="btn btn-primary">Simpan</button>
                         </div>
                     </form>
                 </div>
