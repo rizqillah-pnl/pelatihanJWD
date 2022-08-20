@@ -260,7 +260,7 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
                                     </div>
                                     <!-- End Modal Tambah -->
 
-                                    <button type="button" class="btn btn-secondary text-white text-center mb-2" data-bs-toggle="modal" data-bs-target="#cetak"><i class="mdi mdi-account-plus"></i> Cetak Data Buku</button>
+                                    <a href="print/cetak-buku.php" target="_blank" class="btn btn-secondary text-white text-center mb-2"><i class="mdi mdi-account-plus"></i> Cetak Data Buku</a>
                                 </div>
                             </div>
 
