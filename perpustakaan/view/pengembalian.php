@@ -40,7 +40,7 @@ date_default_timezone_set('Asia/Jakarta');
         <?php if ($pesan == 202) : ?>
             <script>
                 let nama = '<?= $_SESSION['nama']; ?>'
-                swal("Berhasil!", `Data transaksi buku dengan kode ${nama} berhasil dihapus!`, "success", {
+                swal("Berhasil!", `Data transaksi dengan kode ${nama} berhasil dihapus!`, "success", {
                     timer: 3000,
                     button: false,
                 });
@@ -48,7 +48,7 @@ date_default_timezone_set('Asia/Jakarta');
         <?php elseif ($pesan == 302) : ?>
             <script>
                 let nama = '<?= $_SESSION['nama']; ?>'
-                swal("Gagal!", `Data transaksi buku dengan kode ${nama} gagal dihapus!`, "error", {
+                swal("Gagal!", `Data transaksi dengan kode ${nama} gagal dihapus!`, "error", {
                     timer: 3000,
                     button: false,
                 });

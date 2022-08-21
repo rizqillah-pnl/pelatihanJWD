@@ -186,7 +186,7 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
                                                 <form action="../model/tambah-anggota.php" method="POST" enctype="multipart/form-data">
                                                     <div class="modal-body">
                                                         <div class="mb-3 row">
-                                                            <label class="col-md-4 col-form-label" for="foto">Foto</label>
+                                                            <label class="col-md-4 col-form-label" for="foto">Foto <span class="text-danger">*</span></label>
                                                             <div class="col-sm-8" id="previewimg">
                                                                 <input type="file" name="foto" id="foto" class="form-control" required onchange="validateImg(this, 'tambah', 'foto', 'previewimg', 'fotoFeedback')" aria-describedby="fotoFeedback" accept="image/*">
                                                                 <div id="fotoFeedback" class="invalid-feedback"></div>
@@ -194,26 +194,26 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
                                                             </div>
                                                         </div>
                                                         <div class="mb-3 row">
-                                                            <label for="nama" class="col-md-4 col-form-label">Nama Anggota</label>
+                                                            <label for="nama" class="col-md-4 col-form-label">Nama Anggota <span class="text-danger">*</span></label>
                                                             <div class="col-sm-8">
                                                                 <input type="text" name="nama" class="form-control" id="nama" required maxlength="100">
                                                             </div>
                                                         </div>
                                                         <div class="mb-3 row">
-                                                            <label for="nohp" class="col-md-4 col-form-label">No HP</label>
+                                                            <label for="nohp" class="col-md-4 col-form-label">No HP <span class="text-danger">*</span></label>
                                                             <div class="col-sm-8">
                                                                 <input type="text" name="nohp" class="form-control" id="nohp" required maxlength="15" onkeypress="return toNumber(event)">
                                                             </div>
                                                         </div>
                                                         <div class="mb-3 row">
-                                                            <label class="col-md-4 col-form-label">Jenis Kelamin</label>
+                                                            <label class="col-md-4 col-form-label">Jenis Kelamin <span class="text-danger">*</span></label>
                                                             <div class="col-sm-8">
                                                                 <input type="radio" name="jkel" id="laki" required value="L"> <label for="laki">Laki-laki</label>
                                                                 <input type="radio" name="jkel" id="perempuan" required value="P"> <label for="perempuan">Perempuan</label>
                                                             </div>
                                                         </div>
                                                         <div class="mb-3 row">
-                                                            <label class="col-md-4 col-form-label" for="alamat">Alamat</label>
+                                                            <label class="col-md-4 col-form-label" for="alamat">Alamat <span class="text-danger">*</span></label>
                                                             <div class="col-sm-8">
                                                                 <textarea name="alamat" id="alamat" cols="38" rows="3" class="form-control" maxlength="200" required></textarea>
                                                             </div>
@@ -362,7 +362,7 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
                         <input type="hidden" name="idAnggota" value="<?= $row['id_anggota']; ?>">
                         <div class="modal-body">
                             <div class="mb-3 row">
-                                <label class="col-md-4 col-form-label" for="foto<?= $row['id_anggota']; ?>">Foto</label>
+                                <label class="col-md-4 col-form-label" for="foto<?= $row['id_anggota']; ?>">Foto <span class="text-danger">*</span></label>
                                 <div class="col-sm-8" id="preview<?= $row['id_anggota']; ?>">
                                     <input type="file" name="foto" id="foto<?= $row['id_anggota']; ?>" class="form-control" onchange="validateImg(this, 'edit', 'foto<?= $row['id_anggota']; ?>', 'preview<?= $row['id_anggota']; ?>', 'fotoFeedback<?= $row['id_anggota']; ?>')" aria-describedby="fotoFeedback" accept="image/*">
                                     <div id="fotoFeedback<?= $row['id_anggota']; ?>" class="invalid-feedback"></div>
@@ -370,19 +370,19 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label for="nama<?= $row['id_anggota']; ?>" class="col-md-4 col-form-label">Nama Anggota</label>
+                                <label for="nama<?= $row['id_anggota']; ?>" class="col-md-4 col-form-label">Nama Anggota <span class="text-danger">*</span></label>
                                 <div class="col-sm-8">
                                     <input type="text" name="nama" class="form-control" id="nama<?= $row['id_anggota']; ?>" required maxlength="100" value="<?= $row['nama']; ?>">
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label for="nohp<?= $row['id_anggota']; ?>" class="col-md-4 col-form-label">No HP</label>
+                                <label for="nohp<?= $row['id_anggota']; ?>" class="col-md-4 col-form-label">No HP <span class="text-danger">*</span></label>
                                 <div class="col-sm-8">
                                     <input type="text" name="nohp" class="form-control" id="nohp<?= $row['id_anggota']; ?>" required maxlength="15" onkeypress="return toNumber(event)" value="<?= $row['nohp']; ?>">
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label class="col-md-4 col-form-label">Jenis Kelamin</label>
+                                <label class="col-md-4 col-form-label">Jenis Kelamin <span class="text-danger">*</span></label>
                                 <div class="col-sm-8">
                                     <?php
                                     $laki = "";
@@ -394,7 +394,7 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label class="col-md-4 col-form-label" for="alamat<?= $row['id_anggota']; ?>">Alamat</label>
+                                <label class="col-md-4 col-form-label" for="alamat<?= $row['id_anggota']; ?>">Alamat <span class="text-danger">*</span></label>
                                 <div class="col-sm-8">
                                     <textarea name="alamat" id="alamat<?= $row['id_anggota']; ?>" cols="38" rows="3" class="form-control" maxlength="200" required><?= $row['alamat']; ?></textarea>
                                 </div>

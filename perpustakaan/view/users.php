@@ -409,9 +409,10 @@ $users = mysqli_query($conn, "SELECT * FROM tb_user ORDER BY hak_akses, id DESC 
                             </script>
 
                             <div class="mb-3 row">
-                                <label for="password<?= $row['id']; ?>" class="col-md-4 col-form-label">Password</label>
+                                <label for="password<?= $row['id']; ?>" class="col-md-4 col-form-label">Ganti Password</label>
                                 <div class="col-sm-8">
                                     <input type="password" name="password" class="form-control" id="password<?= $row['id']; ?>" maxlength="200">
+                                    <div class="form-text text-info">Boleh dikosongkan!</div>
                                 </div>
                             </div>
                         </div>

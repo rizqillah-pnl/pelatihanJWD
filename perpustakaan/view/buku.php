@@ -186,7 +186,7 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
                                                 <form action="../model/tambah-buku.php" method="POST" enctype="multipart/form-data">
                                                     <div class="modal-body">
                                                         <div class="mb-3 row">
-                                                            <label class="col-md-4 col-form-label" for="foto">Sampul</label>
+                                                            <label class="col-md-4 col-form-label" for="foto">Sampul <span class="text-danger">*</span></label>
                                                             <div class="col-sm-8" id="previewimg">
                                                                 <input type="file" name="foto" id="foto" class="form-control" required onchange="validateImg(this, 'tambah', 'foto', 'previewimg', 'fotoFeedback')" aria-describedby="fotoFeedback" accept="image/*">
                                                                 <div id="fotoFeedback" class="invalid-feedback"></div>
@@ -194,43 +194,43 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
                                                             </div>
                                                         </div>
                                                         <div class="mb-3 row">
-                                                            <label for="judul" class="col-md-4 col-form-label">Judul Buku</label>
+                                                            <label for="judul" class="col-md-4 col-form-label">Judul Buku <span class="text-danger">*</span></label>
                                                             <div class="col-sm-8">
                                                                 <input type="text" name="judul" class="form-control" id="judul" required maxlength="200">
                                                             </div>
                                                         </div>
                                                         <div class=" mb-3 row">
-                                                            <label for="penerbit" class="col-md-4 col-form-label">Penerbit</label>
+                                                            <label for="penerbit" class="col-md-4 col-form-label">Penerbit <span class="text-danger">*</span></label>
                                                             <div class="col-sm-8">
                                                                 <input type="text" maxlength="200" name="penerbit" id="penerbit" required class="form-control">
                                                             </div>
                                                         </div>
                                                         <div class="mb-3 row">
-                                                            <label for="isbn" class="col-md-4 col-form-label">ISBN</label>
+                                                            <label for="isbn" class="col-md-4 col-form-label">ISBN <span class="text-danger">*</span></label>
                                                             <div class="col-sm-8">
                                                                 <input type="text" maxlength="100" name="isbn" id="isbn" required class="form-control">
                                                             </div>
                                                         </div>
                                                         <div class="mb-3 row">
-                                                            <label for="pengarang" class="col-md-4 col-form-label">Pengarang</label>
+                                                            <label for="pengarang" class="col-md-4 col-form-label">Pengarang <span class="text-danger">*</span></label>
                                                             <div class="col-sm-8">
                                                                 <input type="text" maxlength="200" name="pengarang" id="pengarang" required class="form-control">
                                                             </div>
                                                         </div>
                                                         <div class="mb-3 row">
-                                                            <label for="jumhal" class="col-md-4 col-form-label">Jumlah Halaman</label>
+                                                            <label for="jumhal" class="col-md-4 col-form-label">Jumlah Halaman <span class="text-danger">*</span></label>
                                                             <div class="col-sm-8">
                                                                 <input type="text" maxlength="4" onkeypress="return toNumber(event)" name="jumhal" id="jumhal" required class="form-control">
                                                             </div>
                                                         </div>
                                                         <div class="mb-3 row">
-                                                            <label for="jumstok" class="col-md-4 col-form-label">Jumlah Stok</label>
+                                                            <label for="jumstok" class="col-md-4 col-form-label">Jumlah Stok <span class="text-danger">*</span></label>
                                                             <div class="col-sm-8">
                                                                 <input type="text" maxlength="3" onkeypress="return toNumber(event)" name="jumstok" id="jumstok" required class="form-control">
                                                             </div>
                                                         </div>
                                                         <div class="mb-3 row">
-                                                            <label for="thnterbit<?= $row['id']; ?>" class="col-md-4 col-form-label">Tahun Terbit</label>
+                                                            <label for="thnterbit<?= $row['id']; ?>" class="col-md-4 col-form-label">Tahun Terbit <span class="text-danger">*</span></label>
                                                             <div class="col-sm-8">
                                                                 <select name="thnterbit" id="thnterbit<?= $row['id']; ?>" class="form-select">
                                                                     <?php for ($i = 1900; $i <= date('Y'); $i++) : ?>
@@ -244,7 +244,7 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
                                                             </div>
                                                         </div>
                                                         <div class="mb-3 row">
-                                                            <label class="col-md-4 col-form-label" for="sinopsis">Sinopsis</label>
+                                                            <label class="col-md-4 col-form-label" for="sinopsis">Sinopsis <span class="text-danger">*</span></label>
                                                             <div class="col-sm-8">
                                                                 <textarea name="sinopsis" id="sinopsis" cols="38" rows="3" class="form-control" maxlength="200" required></textarea>
                                                             </div>
@@ -387,7 +387,7 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
                         <input type="hidden" name="id" value="<?= $row['id']; ?>">
                         <div class="modal-body">
                             <div class="mb-3 row">
-                                <label class="col-md-4 col-form-label" for="foto<?= $row['id']; ?>">Foto</label>
+                                <label class="col-md-4 col-form-label" for="foto<?= $row['id']; ?>">Foto <span class="text-danger">*</span></label>
                                 <div class="col-sm-8" id="preview<?= $row['id']; ?>">
                                     <input type="file" name="foto" id="foto<?= $row['id']; ?>" class="form-control" onchange="validateImg(this, 'edit', 'foto<?= $row['id']; ?>', 'preview<?= $row['id']; ?>', 'fotoFeedback<?= $row['id']; ?>')" aria-describedby="fotoFeedback" accept="image/*">
                                     <div id="fotoFeedback<?= $row['id']; ?>" class="invalid-feedback"></div>
@@ -395,43 +395,43 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label for="judul<?= $row['id']; ?>" class="col-md-4 col-form-label">Judul Buku</label>
+                                <label for="judul<?= $row['id']; ?>" class="col-md-4 col-form-label">Judul Buku <span class="text-danger">*</span></label>
                                 <div class="col-sm-8">
                                     <input type="text" value="<?= $row['judul']; ?>" name="judul" class="form-control" id="judul<?= $row['id']; ?>" required maxlength="200">
                                 </div>
                             </div>
                             <div class=" mb-3 row">
-                                <label for="penerbit<?= $row['id']; ?>" class="col-md-4 col-form-label">Penerbit</label>
+                                <label for="penerbit<?= $row['id']; ?>" class="col-md-4 col-form-label">Penerbit <span class="text-danger">*</span></label>
                                 <div class="col-sm-8">
                                     <input type="text" maxlength="200" value="<?= $row['penerbit']; ?>" name="penerbit" id="penerbit<?= $row['id']; ?>" required class="form-control">
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label for="isbn<?= $row['id']; ?>" class="col-md-4 col-form-label">ISBN</label>
+                                <label for="isbn<?= $row['id']; ?>" class="col-md-4 col-form-label">ISBN <span class="text-danger">*</span></label>
                                 <div class="col-sm-8">
                                     <input type="text" maxlength="100" name="isbn" id="isbn<?= $row['id']; ?>" required class="form-control" value="<?= $row['isbn']; ?>">
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label for="pengarang<?= $row['id']; ?>" class="col-md-4 col-form-label">Pengarang</label>
+                                <label for="pengarang<?= $row['id']; ?>" class="col-md-4 col-form-label">Pengarang <span class="text-danger">*</span></label>
                                 <div class="col-sm-8">
                                     <input type="text" value="<?= $row['pengarang']; ?>" maxlength="200" name="pengarang" id="pengarang<?= $row['id']; ?>" required class="form-control">
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label for="jumhal<?= $row['id']; ?>" class="col-md-4 col-form-label">Jumlah Halaman</label>
+                                <label for="jumhal<?= $row['id']; ?>" class="col-md-4 col-form-label">Jumlah Halaman <span class="text-danger">*</span></label>
                                 <div class="col-sm-8">
                                     <input type="text" maxlength="4" value="<?= $row['jumlah_halaman']; ?>" onkeypress="return toNumber(event)" name="jumhal" id="jumhal<?= $row['id']; ?>" required class="form-control">
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label for="jumstok<?= $row['id']; ?>" class="col-md-4 col-form-label">Jumlah Stok</label>
+                                <label for="jumstok<?= $row['id']; ?>" class="col-md-4 col-form-label">Jumlah Stok <span class="text-danger">*</span></label>
                                 <div class="col-sm-8">
                                     <input type="text" maxlength="3" onkeypress="return toNumber(event)" value="<?= $row['jumlah_stok']; ?>" name="jumstok" id="jumstok<?= $row['id']; ?>" required class="form-control">
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label for="thnterbit<?= $row['id']; ?>" class="col-md-4 col-form-label">Tahun Terbit</label>
+                                <label for="thnterbit<?= $row['id']; ?>" class="col-md-4 col-form-label">Tahun Terbit <span class="text-danger">*</span></label>
                                 <div class="col-sm-8">
                                     <select name="thnterbit" id="thnterbit<?= $row['id']; ?>" class="form-select">
                                         <?php for ($i = 1900; $i <= date('Y'); $i++) : ?>
@@ -445,7 +445,7 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label class="col-md-4 col-form-label" for="sinopsis<?= $row['id']; ?>">Sinopsis</label>
+                                <label class="col-md-4 col-form-label" for="sinopsis<?= $row['id']; ?>">Sinopsis <span class="text-danger">*</span></label>
                                 <div class="col-sm-8">
                                     <textarea name="sinopsis" id="sinopsis<?= $row['id']; ?>" cols="38" rows="3" class="form-control" maxlength="200" required><?= $row['sinopsis']; ?></textarea>
                                 </div>
