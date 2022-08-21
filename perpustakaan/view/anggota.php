@@ -14,7 +14,7 @@ $halamanAktif = (isset($_GET['page'])) ? $_GET['page'] : 1;
 $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
 
 
-$anggota = mysqli_query($conn, "SELECT * FROM tb_anggota LIMIT $awalData, $jumlahDataPerHalaman");
+$anggota = mysqli_query($conn, "SELECT * FROM tb_anggota ORDER BY id_anggota DESC LIMIT $awalData, $jumlahDataPerHalaman");
 
 
 $kode = $_SESSION['user']['id'];
@@ -106,7 +106,7 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
                         <use xlink:href="../vendor/coreUI/vendors/@coreui/icons/svg/free.svg#cil-monitor"></use>
                     </svg> Master</a>
                 <ul class="nav-group-items">
-                    <li class="nav-item"><a class="nav-link active" href="anggota.php"><i class="bi bi-people-fill" style="margin-right: 10px;"></i> Data Anggota</a></li>
+                    <li class="nav-item"><a class="nav-link" href="anggota.php"><i class="bi bi-people-fill" style="margin-right: 10px;"></i> Data Anggota</a></li>
                     <li class="nav-item"><a class="nav-link" href="buku.php"><i class="bi bi-book-half" style="margin-right: 10px;"></i> Data Buku</a></li>
                     <?php if ($hak_akses == "1") : ?>
                         <li class="nav-item"><a class="nav-link" href="users.php"><i class="bi bi-person-fill" style="margin-right: 10px;"></i> Data Users</a></li>
@@ -273,7 +273,7 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
                                             <?php foreach ($anggota as $row) : ?>
                                                 <tr>
                                                     <td class="text-center"><?= $no = $no + 1; ?></td>
-                                                    <td>AG0<?= $row['id_anggota']; ?></td>
+                                                    <td>AG<?= sprintf("%03d", $row['id_anggota']); ?></td>
                                                     <td class="text-wrap" style="width: 200px;"><?= $row['nama']; ?></td>
                                                     <td class="text-center"><img src="../public/img/anggota/<?= $row['foto']; ?>" alt="Profil <?= $row['nama']; ?>" width="80" height="80"></td>
                                                     <td class="text-center"><?= ($row['jkel'] == "L") ? "Laki-laki" : "Perempuan"; ?></td>

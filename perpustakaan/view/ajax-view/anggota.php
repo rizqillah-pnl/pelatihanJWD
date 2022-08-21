@@ -9,7 +9,7 @@ if ($search != "") {
     $halamanAktif = (isset($_GET['page'])) ? $_GET['page'] : 1;
     $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
 
-    $sql = "SELECT * FROM tb_anggota WHERE nama LIKE '%$search%' OR id_anggota LIKE '%$search%' OR alamat LIKE '%$search%'";
+    $sql = "SELECT * FROM tb_anggota WHERE nama LIKE '%$search%' OR id_anggota LIKE '%$search%' OR alamat LIKE '%$search%' ORDER BY id_anggota DESC";
 } else {
     $jumlahDataPerHalaman = 5;
     $jumData = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_anggota"));
@@ -17,7 +17,7 @@ if ($search != "") {
     $halamanAktif = (isset($_GET['page'])) ? $_GET['page'] : 1;
     $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
 
-    $sql = "SELECT * FROM tb_anggota LIMIT $awalData, $jumlahDataPerHalaman";
+    $sql = "SELECT * FROM tb_anggota ORDER BY id_anggota DESC LIMIT $awalData, $jumlahDataPerHalaman";
 }
 
 
@@ -44,7 +44,7 @@ $anggota = mysqli_query($conn, $sql);
             <?php foreach ($anggota as $row) : ?>
                 <tr>
                     <td class="text-center"><?= $no = $no + 1; ?></td>
-                    <td>AG0<?= $row['id_anggota']; ?></td>
+                    <td>AG<?= sprintf("%03d", $row['id_anggota']); ?></td>
                     <td class="text-wrap" style="width: 200px;"><?= $row['nama']; ?></td>
                     <td class="text-center"><img src="../public/img/anggota/<?= $row['foto']; ?>" alt="Profil <?= $row['nama']; ?>" width="80" height="80"></td>
                     <td class="text-center"><?= ($row['jkel'] == "L") ? "Laki-laki" : "Perempuan"; ?></td>

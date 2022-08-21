@@ -78,7 +78,7 @@
  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js" integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK" crossorigin="anonymous"></script>
  <script src="../vendor/coreUI/vendors/simplebar/js/simplebar.min.js"></script>
  <!-- Plugins and scripts required by this view-->
- <script src="../vendor/coreUI/vendors/chart.js/js/chart.min.js"></script>
- <script src="../vendor/coreUI/vendors/@coreui/chartjs/js/coreui-chartjs.js"></script>
+ <!-- <script src="../vendor/coreUI/vendors/chart.js/js/chart.min.js"></script> -->
+ <!-- <script src="../vendor/coreUI/vendors/@coreui/chartjs/js/coreui-chartjs.js"></script> -->
  <script src="../vendor/coreUI/vendors/@coreui/utils/js/coreui-utils.js"></script>
- <script src="../public//js/main.js"></script>
+ <!-- <script src="../public//js/main.js"></script> -->

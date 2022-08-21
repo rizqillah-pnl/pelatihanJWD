@@ -131,19 +131,19 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
             </div>
           </div>
           <div class="card-footer bg-white">
-            <div class="row row-cols-1 row-cols-md-3 text-center">
-              <div class="col mb-sm-3 mb-3">
+            <div class="row row-cols-1 row-cols-md-3 text-center" style="margin-left: 10px;">
+              <div class="col mb-sm-3 mb-3 border-start border-start-4 border-start-info px-3 mb-3">
                 <div class="text-medium-emphasis">Visits</div>
                 <div class="fw-semibold">29.703 Users</div>
                 <!-- <div class="progress progress-thin mt-2">
                   <div class="progress-bar bg-success" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
                 </div> -->
               </div>
-              <div class="col mb-sm-3 mb-3">
+              <div class="col mb-sm-3 mb-3 border-start border-start-4 border-start-warning px-3 mb-3">
                 <div class="text-medium-emphasis">Pageviews</div>
                 <div class="fw-semibold">78.706 Views</div>
               </div>
-              <div class="col mb-sm-3 mb-3">
+              <div class="col mb-sm-3 mb-3 border-start border-start-4 border-start-success px-3 mb-3">
                 <div class="text-medium-emphasis">Users</div>
                 <div class="fw-semibold"><?= mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_user")); ?> Users</div>
               </div>

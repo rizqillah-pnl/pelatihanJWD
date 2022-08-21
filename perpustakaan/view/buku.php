@@ -7,14 +7,14 @@ if (!isset($_SESSION['user'])) {
 
 $hak_akses = $_SESSION['user']['hak_akses'];
 
-$jumlahDataPerHalaman = 5;
+$jumlahDataPerHalaman = 10;
 $jumData = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) FROM tb_buku"));
 $jumlahHalaman = ceil($jumData['COUNT(*)'] / $jumlahDataPerHalaman);
 $halamanAktif = (isset($_GET['page'])) ? $_GET['page'] : 1;
 $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
 
 
-$buku = mysqli_query($conn, "SELECT * FROM tb_buku LIMIT $awalData, $jumlahDataPerHalaman");
+$buku = mysqli_query($conn, "SELECT * FROM tb_buku ORDER BY id DESC LIMIT $awalData, $jumlahDataPerHalaman");
 
 
 $kode = $_SESSION['user']['id'];
@@ -291,7 +291,7 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
                                             <th class="text-center">Sampul</th>
                                             <th class="text-center">Pengarang</th>
                                             <th class="text-center">Tahun Terbit</th>
-                                            <th class="text-center">Aksi</th>
+                                            <th class="text-center">Opsi</th>
                                         </tr>
                                     </thead>
                                     <tbody class="table-group-divider">
@@ -300,7 +300,7 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
                                             <?php foreach ($buku as $row) : ?>
                                                 <tr>
                                                     <td class="text-center"><?= $no = $no + 1; ?></td>
-                                                    <td>BK<?= $row['id']; ?></td>
+                                                    <td>BK<?= sprintf("%04d", $row['id']); ?></td>
                                                     <td class="text-wrap" style="width: 200px;"><?= $row['judul']; ?></td>
                                                     <td class="text-center"><img src="../public/img/buku/<?= $row['gambar']; ?>" alt="Sampul <?= $row['judul']; ?>" width="80" height="80"></td>
                                                     <td class="text-center"><?= $row['pengarang']; ?></td>
@@ -323,39 +323,41 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
                                 <span class="ms-auto">Showing <?= mysqli_num_rows($buku); ?> Data of <?= mysqli_num_rows($jumData); ?>.</span>
                             </div>
                             <div class="mt-4">
-                                <?php if (mysqli_num_rows($jumData) > 5) : ?>
+                                <?php if (mysqli_num_rows($jumData) > $jumlahDataPerHalaman) : ?>
                                     <div class="col">
-                                        <ul class="pagination d-flex justify-content-end">
-                                            <?php if ($halamanAktif > 1) : ?>
-                                                <li class="page-item">
-                                                    <span class="page-link"><a href="buku.php?page=<?= $halamanAktif - 1; ?>" style="text-decoration: none;">Previous</a></span>
-                                                </li>
-                                            <?php else : ?>
-                                                <li class="page-item disabled">
-                                                    <span class="page-link">Previous</span>
-                                                </li>
-                                            <?php endif; ?>
-
-                                            <?php for ($i = 1; $i <= $jumlahHalaman; $i++) : ?>
-                                                <?php if ($i == $halamanAktif) : ?>
-                                                    <li class="page-item active" aria-current="page">
-                                                        <span class="page-link"><a href="buku.php?page=<?= $i; ?>" class="text-white" style="text-decoration: none;"><?= $i; ?></a></span>
+                                        <nav aria-label="Page navigation example">
+                                            <ul class="pagination justify-content-end">
+                                                <?php if ($halamanAktif > 1) : ?>
+                                                    <li class="page-item">
+                                                        <span class="page-link"><a href="buku.php?page=<?= $halamanAktif - 1; ?>" style="text-decoration: none;">Previous</a></span>
                                                     </li>
                                                 <?php else : ?>
-                                                    <li class="page-item"><a class="page-link" href="buku.php?page=<?= $i; ?>"><?= $i; ?></a></li>
+                                                    <li class="page-item disabled">
+                                                        <span class="page-link">Previous</span>
+                                                    </li>
                                                 <?php endif; ?>
-                                            <?php endfor; ?>
 
-                                            <?php if ($halamanAktif < $jumlahHalaman) : ?>
-                                                <li class="page-item">
-                                                    <span class="page-link"><a href="buku.php?page=<?= $halamanAktif + 1; ?>" style="text-decoration: none;">Next</a></span>
-                                                </li>
-                                            <?php else : ?>
-                                                <li class="page-item disabled">
-                                                    <span class="page-link">Next</span>
-                                                </li>
-                                            <?php endif; ?>
-                                        </ul>
+                                                <?php for ($i = 1; $i <= $jumlahHalaman; $i++) : ?>
+                                                    <?php if ($i == $halamanAktif) : ?>
+                                                        <li class="page-item active" aria-current="page">
+                                                            <span class="page-link"><a href="buku.php?page=<?= $i; ?>" class="text-white" style="text-decoration: none;"><?= $i; ?></a></span>
+                                                        </li>
+                                                    <?php else : ?>
+                                                        <li class="page-item"><a class="page-link" href="buku.php?page=<?= $i; ?>"><?= $i; ?></a></li>
+                                                    <?php endif; ?>
+                                                <?php endfor; ?>
+
+                                                <?php if ($halamanAktif < $jumlahHalaman) : ?>
+                                                    <li class="page-item">
+                                                        <span class="page-link"><a href="buku.php?page=<?= $halamanAktif + 1; ?>" style="text-decoration: none;">Next</a></span>
+                                                    </li>
+                                                <?php else : ?>
+                                                    <li class="page-item disabled">
+                                                        <span class="page-link">Next</span>
+                                                    </li>
+                                                <?php endif; ?>
+                                            </ul>
+                                        </nav>
                                     </div>
                                 <?php endif; ?>
                             </div>
@@ -371,7 +373,8 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
         </footer>
     </div>
 
-    <?php foreach ($buku as $row) : ?>
+    <?php $books = mysqli_query($conn, "SELECT * FROM tb_buku"); ?>
+    <?php foreach ($books as $row) : ?>
         <!-- Modal Edit Buku -->
         <div class="modal fade " id="Edit<?= $row['id']; ?>" tabindex="-1" aria-labelledby="EditBuku" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -480,6 +483,103 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
             </div>
         </div>
         <!-- End Modal Delete -->
+
+        <!-- Modal Detail -->
+        <div class="modal fade " id="Detail<?= $row['id']; ?>" tabindex="-1" aria-labelledby="DetailLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="DetailLabel">Detail Buku</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <img src="../public/img/buku/<?= $row['gambar']; ?>" alt="Sampul <?= $row['judul']; ?>" class="img-thumbnail rounded mx-auto d-block mb-5" width="200px">
+
+                        <table class="table">
+                            <tr>
+                                <td>
+                                    Kode Buku
+                                </td>
+                                <td> : </td>
+                                <td>BK<?= $row['id']; ?></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Judul Buku
+                                </td>
+                                <td> : </td>
+                                <td><?= $row['judul']; ?></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Pengarang
+                                </td>
+                                <td> : </td>
+                                <td>
+                                    <?= $row['pengarang']; ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Penerbit
+                                </td>
+                                <td> : </td>
+                                <td><?= $row['penerbit']; ?></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    ISBN
+                                </td>
+                                <td> : </td>
+                                <td>
+                                    <?= $row['isbn']; ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Tahun Terbit
+                                </td>
+                                <td> : </td>
+                                <td>
+                                    <?= $row['tahun_terbit']; ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Jumlah Halaman
+                                </td>
+                                <td> : </td>
+                                <td>
+                                    <?= $row['jumlah_halaman']; ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Jumlah Persediaan
+                                </td>
+                                <td> : </td>
+                                <td>
+                                    <?= $row['jumlah_stok']; ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Sinopsis
+                                </td>
+                                <td> : </td>
+                                <td>
+                                    <?= $row['sinopsis']; ?>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Modal Detail -->
     <?php endforeach; ?>
 
 
