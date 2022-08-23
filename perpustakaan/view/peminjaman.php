@@ -21,6 +21,9 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
 $peminjaman = mysqli_query($conn, "SELECT tb_peminjaman.id, tb_peminjaman.tanggal_pinjam, tb_peminjaman.keterangan, tb_peminjaman.status, tb_peminjaman.jumlah, tb_user.nama, tb_anggota.nama as nama_member, tb_buku.judul FROM tb_peminjaman LEFT JOIN tb_buku ON tb_peminjaman.buku_id=tb_buku.id LEFT JOIN tb_anggota ON tb_anggota.id_anggota=tb_peminjaman.anggota_id LEFT JOIN tb_user ON tb_user.id=tb_peminjaman.user_id WHERE tb_peminjaman.deleted='0' ORDER BY tb_peminjaman.status ASC, tb_peminjaman.id DESC LIMIT $awalData, $jumlahDataPerHalaman");
 
 date_default_timezone_set('Asia/Jakarta');
+$now = date('Y-m-d H:i');
+mysqli_query($conn, "UPDATE tb_user SET last_log='$now' WHERE id='$kode'");
+
 
 ?>
 
@@ -141,7 +144,7 @@ date_default_timezone_set('Asia/Jakarta');
                     <li class="nav-item"><a class="nav-link" href="pengembalian.php"><i class="bi bi-bookmark-check" style="margin-right: 10px;"></i> Pengembalian</a></li>
                 </ul>
             </li>
-            <li class="nav-item"><a class="nav-link" href="laporan.php">
+            <li class="nav-item"><a class="nav-link" href="print/cetak-transaksi.php" target="_blank">
                     <svg class="nav-icon">
                         <use xlink:href="../vendor/coreUI/vendors/@coreui/icons/svg/free.svg#cil-file"></use>
                     </svg> Laporan Transaksi</a>
@@ -206,7 +209,7 @@ date_default_timezone_set('Asia/Jakarta');
                                                             <label for="buku" class="col-md-4 col-form-label">Buku <span class="text-danger">*</span></label>
                                                             <div class="col-sm-8">
                                                                 <select name="buku" id="buku" class="form-select">
-                                                                    <?php $books = mysqli_query($conn, "SELECT * FROM tb_buku"); ?>
+                                                                    <?php $books = mysqli_query($conn, "SELECT * FROM tb_buku WHERE deleted='0'"); ?>
                                                                     <?php foreach ($books as $row) : ?>
                                                                         <?php if ($row['jumlah_stok'] == 0) : ?>
                                                                             <?php continue; ?>
@@ -220,7 +223,7 @@ date_default_timezone_set('Asia/Jakarta');
                                                             <label for="anggota" class="col-md-4 col-form-label">Anggota <span class="text-danger">*</span></label>
                                                             <div class="col-sm-8">
                                                                 <select name="anggota" id="anggota" class="form-select" placeholder="Pilih Anggota . . .">
-                                                                    <?php $members = mysqli_query($conn, "SELECT * FROM tb_anggota"); ?>
+                                                                    <?php $members = mysqli_query($conn, "SELECT * FROM tb_anggota WHERE deleted='0'"); ?>
                                                                     <?php foreach ($members as $row) : ?>
                                                                         <option value="<?= $row['id_anggota']; ?>">AGT<?= sprintf("%03d", $row['id_anggota']); ?> - <?= $row['nama']; ?></option>
                                                                     <?php endforeach; ?>

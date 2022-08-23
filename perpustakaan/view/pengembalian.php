@@ -2,7 +2,7 @@
 include '../controller/koneksi.php';
 
 $kode = $_SESSION['user']['id'];
-$result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id='$kode'"));
+$result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id='$kode' AND deleted='0'"));
 
 if (!isset($_SESSION['user'])) {
     header("Location: login.php");
@@ -20,7 +20,10 @@ $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
 
 $pengembalian = mysqli_query($conn, "SELECT tb_pengembalian.id, tb_peminjaman.tanggal_pinjam, tb_peminjaman.keterangan, tb_peminjaman.status, tb_peminjaman.jumlah, tb_user.nama, tb_anggota.nama as nama_member, tb_buku.judul, tb_pengembalian.tanggal_kembali FROM tb_pengembalian LEFT JOIN tb_peminjaman ON tb_pengembalian.peminjaman_id=tb_peminjaman.id LEFT JOIN tb_buku ON tb_peminjaman.buku_id=tb_buku.id LEFT JOIN tb_anggota ON tb_anggota.id_anggota=tb_peminjaman.anggota_id LEFT JOIN tb_user ON tb_user.id=tb_peminjaman.user_id WHERE tb_peminjaman.deleted='0' AND tb_peminjaman.status='1' AND tb_pengembalian.deleted='0' ORDER BY tb_pengembalian.id DESC LIMIT $awalData, $jumlahDataPerHalaman");
 
+
 date_default_timezone_set('Asia/Jakarta');
+$now = date('Y-m-d H:i');
+mysqli_query($conn, "UPDATE tb_user SET last_log='$now' WHERE id='$kode'");
 
 ?>
 
@@ -99,7 +102,7 @@ date_default_timezone_set('Asia/Jakarta');
                     <li class="nav-item"><a class="nav-link" href="pengembalian.php"><i class="bi bi-bookmark-check" style="margin-right: 10px;"></i> Pengembalian</a></li>
                 </ul>
             </li>
-            <li class="nav-item"><a class="nav-link" href="laporan.php">
+            <li class="nav-item"><a class="nav-link" href="print/cetak-transaksi.php" target="_blank">
                     <svg class="nav-icon">
                         <use xlink:href="../vendor/coreUI/vendors/@coreui/icons/svg/free.svg#cil-file"></use>
                     </svg> Laporan Transaksi</a>
@@ -204,11 +207,11 @@ date_default_timezone_set('Asia/Jakarta');
                                             <?php endforeach; ?>
                                         <?php else : ?>
                                             <tr>
-                                            <?php if ($_SESSION['user']['hak_akses'] == "1") : ?>
-                                                <td colspan="10" class="text-center fw-bold text-secondary">Data Kosong!</td>
-                                            <?php else: ?>
-                                                <td colspan="9" class="text-center fw-bold text-secondary">Data Kosong!</td>
-                                            <?php endif; ?>
+                                                <?php if ($_SESSION['user']['hak_akses'] == "1") : ?>
+                                                    <td colspan="10" class="text-center fw-bold text-secondary">Data Kosong!</td>
+                                                <?php else : ?>
+                                                    <td colspan="9" class="text-center fw-bold text-secondary">Data Kosong!</td>
+                                                <?php endif; ?>
                                             </tr>
                                         <?php endif; ?>
                                     </tbody>

@@ -9,6 +9,10 @@ if (!isset($_SESSION['user'])) {
 $hak_akses = $_SESSION['user']['hak_akses'];
 $kode = $_SESSION['user']['id'];
 
+date_default_timezone_set('Asia/Jakarta');
+$now = date('Y-m-d H:i');
+mysqli_query($conn, "UPDATE tb_user SET last_log='$now' WHERE id='$kode'");
+
 $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id='$kode'"));
 
 ?>
@@ -80,7 +84,7 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
           <li class="nav-item"><a class="nav-link" href="pengembalian.php"><i class="bi bi-bookmark-check" style="margin-right: 10px;"></i> Pengembalian</a></li>
         </ul>
       </li>
-      <li class="nav-item"><a class="nav-link" href="laporan.php">
+      <li class="nav-item"><a class="nav-link" href="print/cetak-transaksi.php" target="_blank">
           <svg class="nav-icon">
             <use xlink:href="../vendor/coreUI/vendors/@coreui/icons/svg/free.svg#cil-file"></use>
           </svg> Laporan Transaksi</a>
@@ -120,32 +124,50 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
     </header>
     <div class="body flex-grow-1 px-3">
       <div class="container-fluid">
+        <h2 class="text-center">SELAMAT DATANG</h2>
         <!-- /.row-->
         <div class="card mb-4">
           <div class="card-body">
             <div class="d-flex justify-content-between">
               <div>
-                <h4 class="card-title mb-0">Traffic Website</h4>
+                <h4 class="card-title mb-0">Traffic Data</h4>
                 <div class="small text-medium-emphasis">All Time</div>
               </div>
             </div>
           </div>
           <div class="card-footer bg-white">
             <div class="row row-cols-1 row-cols-md-3 text-center" style="margin-left: 10px;">
-              <div class="col mb-sm-3 mb-3 border-start border-start-4 border-start-info px-3 mb-3">
-                <div class="text-medium-emphasis">Visits</div>
-                <div class="fw-semibold">29.703 Users</div>
+              <div class="col mb-sm-1 mb-3 border-start border-start-4 border-start-secondary px-3 mb-3">
+                <div class="text-medium-emphasis">Buku</div>
+                <div class="fw-semibold"><?= mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_buku WHERE deleted='0'")); ?> buku</div>
                 <!-- <div class="progress progress-thin mt-2">
                   <div class="progress-bar bg-success" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
                 </div> -->
               </div>
-              <div class="col mb-sm-3 mb-3 border-start border-start-4 border-start-warning px-3 mb-3">
-                <div class="text-medium-emphasis">Pageviews</div>
-                <div class="fw-semibold">78.706 Views</div>
+              <div class="col mb-sm-1 mb-3 border-start border-start-4 border-start-success px-3 mb-3">
+                <div class="text-medium-emphasis">Anggota</div>
+                <div class="fw-semibold"><?= mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_anggota WHERE deleted='0'")); ?> member</div>
               </div>
-              <div class="col mb-sm-3 mb-3 border-start border-start-4 border-start-success px-3 mb-3">
+              <div class="col mb-sm-1 mb-3 border-start border-start-4 border-start-info px-3 mb-3">
                 <div class="text-medium-emphasis">Users</div>
-                <div class="fw-semibold"><?= mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_user")); ?> Users</div>
+                <div class="fw-semibold"><?= mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_user")); ?> user</div>
+              </div>
+              <div class="col mb-sm-1 mb-3 border-start border-start-4 border-start-danger px-3 mb-3">
+                <div class="text-medium-emphasis">Transaksi</div>
+                <?php
+                $numPinjam = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_peminjaman WHERE deleted='0'"));
+                $numKembali = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_pengembalian WHERE deleted='0'"));
+                $res = $numKembali + $numPinjam;
+                ?>
+                <div class="fw-semibold"><?= $res; ?> transaksi</div>
+              </div>
+              <div class="col mb-sm-1 mb-3 border-start border-start-4 border-start-success px-3 mb-3">
+                <div class="text-medium-emphasis">Peminjaman</div>
+                <div class="fw-semibold"><?= $numPinjam; ?> pinjam</div>
+              </div>
+              <div class="col mb-sm-1 mb-3 border-start border-start-4 border-start-secondary px-3 mb-3">
+                <div class="text-medium-emphasis">Pengembalian</div>
+                <div class="fw-semibold"><?= $numKembali; ?> dikembalikan</div>
               </div>
             </div>
           </div>

@@ -32,8 +32,8 @@ function upload($path)
     date_default_timezone_set('Asia/Jakarta');
     $namaFileBaru = date('d-m-Y H-i-s');
     $namaFileBaru .= $namaFile;
-    $namaFileBaru .= '.';
-    $namaFileBaru .= $ekstensiGambar;
+    // $namaFileBaru .= '.';
+    // $namaFileBaru .= $ekstensiGambar;
 
     if (!file_exists('../public/img/' . $path)) {
         mkdir('../public/img/' . $path, 0777, true);

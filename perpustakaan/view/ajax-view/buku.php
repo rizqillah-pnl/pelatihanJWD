@@ -4,20 +4,20 @@ include '../../controller/koneksi.php';
 $search = $_GET['search'];
 if ($search != "") {
     $jumlahDataPerHalaman = 10;
-    $jumData = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_buku"));
+    $jumData = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_buku WHERE deleted='0'"));
     $jumlahHalaman = ceil($jumData / $jumlahDataPerHalaman);
     $halamanAktif = (isset($_GET['page'])) ? $_GET['page'] : 1;
     $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
 
-    $sql = "SELECT * FROM tb_buku WHERE judul LIKE '%$search%' OR pengarang LIKE '%$search%' OR tahun_terbit LIKE '%$search%' ORDER BY id DESC";
+    $sql = "SELECT * FROM tb_buku WHERE deleted='0' AND (judul LIKE '%$search%' OR pengarang LIKE '%$search%' OR tahun_terbit LIKE '%$search%')ORDER BY id DESC";
 } else {
     $jumlahDataPerHalaman = 10;
-    $jumData = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_buku"));
+    $jumData = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_buku WHERE deleted='0'"));
     $jumlahHalaman = ceil($jumData / $jumlahDataPerHalaman);
     $halamanAktif = (isset($_GET['page'])) ? $_GET['page'] : 1;
     $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
 
-    $sql = "SELECT * FROM tb_buku ORDER BY id DESC LIMIT $awalData, $jumlahDataPerHalaman";
+    $sql = "SELECT * FROM tb_buku WHERE deleted='0' ORDER BY id DESC LIMIT $awalData, $jumlahDataPerHalaman";
 }
 
 
@@ -62,5 +62,5 @@ $buku = mysqli_query($conn, $sql);
         <?php endif; ?>
     </tbody>
 </table>
-<?php $jumData = mysqli_query($conn, "SELECT * FROM tb_buku"); ?>
+<?php $jumData = mysqli_query($conn, "SELECT * FROM tb_buku WHERE deleted='0'"); ?>
 <span class="ms-auto">Showing <?= mysqli_num_rows($buku); ?> Data of <?= mysqli_num_rows($jumData); ?>.</span>

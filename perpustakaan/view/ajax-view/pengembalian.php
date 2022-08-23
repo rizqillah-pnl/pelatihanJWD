@@ -3,7 +3,7 @@ include '../../controller/koneksi.php';
 
 $search = $_GET['search'];
 $kode = $_SESSION['user']['id'];
-$result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id='$kode'"));
+$result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id='$kode' AND deleted='0'"));
 
 if ($search != "") {
     $jumlahDataPerHalaman = 10;

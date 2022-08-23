@@ -8,17 +8,27 @@ if (!isset($_SESSION['user'])) {
 $hak_akses = $_SESSION['user']['hak_akses'];
 
 $jumlahDataPerHalaman = 5;
-$jumData = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) FROM tb_anggota"));
+$jumData = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) FROM tb_anggota WHERE deleted='0'"));
 $jumlahHalaman = ceil($jumData['COUNT(*)'] / $jumlahDataPerHalaman);
 $halamanAktif = (isset($_GET['page'])) ? $_GET['page'] : 1;
 $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
 
 
-$anggota = mysqli_query($conn, "SELECT * FROM tb_anggota ORDER BY id_anggota DESC LIMIT $awalData, $jumlahDataPerHalaman");
+$anggota = mysqli_query($conn, "SELECT * FROM tb_anggota WHERE deleted='0' ORDER BY id_anggota DESC LIMIT $awalData, $jumlahDataPerHalaman");
 
 
 $kode = $_SESSION['user']['id'];
-$result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id='$kode'"));
+$result = mysqli_query($conn, "SELECT * FROM tb_user WHERE id='$kode' AND deleted='0'");
+if (mysqli_num_rows($result) == 0) {
+    header("Location: login.php");
+}
+
+$result = mysqli_fetch_assoc($result);
+
+
+date_default_timezone_set('Asia/Jakarta');
+$now = date('Y-m-d H:i');
+mysqli_query($conn, "UPDATE tb_user SET last_log='$now' WHERE id='$kode'");
 ?>
 
 <!DOCTYPE html>
@@ -124,7 +134,7 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
                     <li class="nav-item"><a class="nav-link" href="pengembalian.php"><i class="bi bi-bookmark-check" style="margin-right: 10px;"></i> Pengembalian</a></li>
                 </ul>
             </li>
-            <li class="nav-item"><a class="nav-link" href="laporan.php">
+            <li class="nav-item"><a class="nav-link" href="print/cetak-transaksi.php" target="_blank">
                     <svg class="nav-icon">
                         <use xlink:href="../vendor/coreUI/vendors/@coreui/icons/svg/free.svg#cil-file"></use>
                     </svg> Laporan Transaksi</a>
@@ -297,7 +307,7 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
                                         <?php endif; ?>
                                     </tbody>
                                 </table>
-                                <?php $jumData = mysqli_query($conn, "SELECT * FROM tb_anggota"); ?>
+                                <?php $jumData = mysqli_query($conn, "SELECT * FROM tb_anggota WHERE deleted='0'"); ?>
                                 <span class="ms-auto">Showing <?= mysqli_num_rows($anggota); ?> Data of <?= mysqli_num_rows($jumData); ?>.</span>
                             </div>
                             <div class="mt-4">

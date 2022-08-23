@@ -2,7 +2,7 @@
 include '../controller/koneksi.php';
 
 $kode = $_SESSION['user']['id'];
-$result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id='$kode'"));
+$result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id='$kode' AND deleted='0'"));
 
 if (!isset($_SESSION['user'])) {
     header("Location: login.php");
@@ -15,15 +15,18 @@ if ($result['hak_akses'] != "1") {
 $hak_akses = $_SESSION['user']['hak_akses'];
 
 $jumlahDataPerHalaman = 10;
-$jumData = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) FROM tb_user"));
+$jumData = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) FROM tb_user WHERE deleted='0'"));
 $jumlahHalaman = ceil($jumData['COUNT(*)'] / $jumlahDataPerHalaman);
 $halamanAktif = (isset($_GET['page'])) ? $_GET['page'] : 1;
 $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
 
 
-$users = mysqli_query($conn, "SELECT * FROM tb_user ORDER BY hak_akses, id DESC LIMIT $awalData, $jumlahDataPerHalaman");
+$users = mysqli_query($conn, "SELECT * FROM tb_user WHERE deleted='0' ORDER BY hak_akses, id DESC LIMIT $awalData, $jumlahDataPerHalaman");
 
 
+date_default_timezone_set('Asia/Jakarta');
+$now = date('Y-m-d H:i');
+mysqli_query($conn, "UPDATE tb_user SET last_log='$now' WHERE id='$kode'");
 
 ?>
 
@@ -130,7 +133,7 @@ $users = mysqli_query($conn, "SELECT * FROM tb_user ORDER BY hak_akses, id DESC 
                     <li class="nav-item"><a class="nav-link" href="pengembalian.php"><i class="bi bi-bookmark-check" style="margin-right: 10px;"></i> Pengembalian</a></li>
                 </ul>
             </li>
-            <li class="nav-item"><a class="nav-link" href="laporan.php">
+            <li class="nav-item"><a class="nav-link" href="print/cetak-transaksi.php" target="_blank">
                     <svg class="nav-icon">
                         <use xlink:href="../vendor/coreUI/vendors/@coreui/icons/svg/free.svg#cil-file"></use>
                     </svg> Laporan Transaksi</a>
@@ -308,7 +311,7 @@ $users = mysqli_query($conn, "SELECT * FROM tb_user ORDER BY hak_akses, id DESC 
                                         <?php endif; ?>
                                     </tbody>
                                 </table>
-                                <?php $jumData = mysqli_query($conn, "SELECT * FROM tb_user"); ?>
+                                <?php $jumData = mysqli_query($conn, "SELECT * FROM tb_user WHERE deleted='0'"); ?>
                                 <span class="ms-auto">Showing <?= mysqli_num_rows($users); ?> Data of <?= mysqli_num_rows($jumData); ?>.</span>
                             </div>
                             <div class="mt-4">
@@ -362,8 +365,8 @@ $users = mysqli_query($conn, "SELECT * FROM tb_user ORDER BY hak_akses, id DESC 
         </footer>
     </div>
 
-    <?php $books = mysqli_query($conn, "SELECT * FROM tb_user"); ?>
-    <?php foreach ($books as $row) : ?>
+    <?php $users = mysqli_query($conn, "SELECT * FROM tb_user WHERE deleted='0'"); ?>
+    <?php foreach ($users as $row) : ?>
         <!-- Modal Edit User -->
         <div class="modal fade " id="Edit<?= $row['id']; ?>" tabindex="-1" aria-labelledby="EditUser" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">

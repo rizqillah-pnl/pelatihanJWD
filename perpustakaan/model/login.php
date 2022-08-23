@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $password = $_POST['password'];
         $_SESSION['username'] = $username;
 
-        $cek = mysqli_query($conn, "SELECT * FROM tb_user WHERE username='$username'");
+        $cek = mysqli_query($conn, "SELECT * FROM tb_user WHERE username='$username' AND deleted='0'");
 
         if (mysqli_num_rows($cek) == 1) {
             $res = mysqli_fetch_assoc($cek);

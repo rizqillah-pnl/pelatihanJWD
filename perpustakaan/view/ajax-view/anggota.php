@@ -4,20 +4,20 @@ include '../../controller/koneksi.php';
 $search = $_GET['search'];
 if ($search != "") {
     $jumlahDataPerHalaman = 5;
-    $jumData = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_anggota"));
+    $jumData = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_anggota WHERE deleted='0'"));
     $jumlahHalaman = ceil($jumData / $jumlahDataPerHalaman);
     $halamanAktif = (isset($_GET['page'])) ? $_GET['page'] : 1;
     $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
 
-    $sql = "SELECT * FROM tb_anggota WHERE nama LIKE '%$search%' OR id_anggota LIKE '%$search%' OR alamat LIKE '%$search%' ORDER BY id_anggota DESC";
+    $sql = "SELECT * FROM tb_anggota WHERE deleted='0' AND (nama LIKE '%$search%' OR id_anggota LIKE '%$search%' OR alamat LIKE '%$search%') ORDER BY id_anggota DESC";
 } else {
     $jumlahDataPerHalaman = 5;
-    $jumData = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_anggota"));
+    $jumData = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_anggota WHERE deleted='0'"));
     $jumlahHalaman = ceil($jumData / $jumlahDataPerHalaman);
     $halamanAktif = (isset($_GET['page'])) ? $_GET['page'] : 1;
     $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
 
-    $sql = "SELECT * FROM tb_anggota ORDER BY id_anggota DESC LIMIT $awalData, $jumlahDataPerHalaman";
+    $sql = "SELECT * FROM tb_anggota WHERE deleted='0' ORDER BY id_anggota DESC LIMIT $awalData, $jumlahDataPerHalaman";
 }
 
 
@@ -68,5 +68,5 @@ $anggota = mysqli_query($conn, $sql);
         <?php endif; ?>
     </tbody>
 </table>
-<?php $jumData = mysqli_query($conn, "SELECT * FROM tb_anggota"); ?>
+<?php $jumData = mysqli_query($conn, "SELECT * FROM tb_anggota WHERE deleted='0'"); ?>
 <span class="ms-auto">Showing <?= mysqli_num_rows($anggota); ?> Data of <?= mysqli_num_rows($jumData); ?>.</span>

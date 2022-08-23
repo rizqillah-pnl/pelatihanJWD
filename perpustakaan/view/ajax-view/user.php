@@ -3,24 +3,24 @@ include '../../controller/koneksi.php';
 
 $search = $_GET['search'];
 $kode = $_SESSION['user']['id'];
-$result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id='$kode'"));
+$result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id='$kode' AND deleted='0'"));
 
 if ($search != "") {
     $jumlahDataPerHalaman = 10;
-    $jumData = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_user"));
+    $jumData = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_user WHERE deleted='0'"));
     $jumlahHalaman = ceil($jumData / $jumlahDataPerHalaman);
     $halamanAktif = (isset($_GET['page'])) ? $_GET['page'] : 1;
     $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
 
-    $sql = "SELECT * FROM tb_user WHERE nama LIKE '%$search%' OR username LIKE '%$search%' ORDER BY hak_akses, id DESC";
+    $sql = "SELECT * FROM tb_user WHERE deleted='0' AND (nama LIKE '%$search%' OR username LIKE '%$search%') ORDER BY hak_akses, id DESC";
 } else {
     $jumlahDataPerHalaman = 10;
-    $jumData = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_user"));
+    $jumData = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_user WHERE deleted='0'"));
     $jumlahHalaman = ceil($jumData / $jumlahDataPerHalaman);
     $halamanAktif = (isset($_GET['page'])) ? $_GET['page'] : 1;
     $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
 
-    $sql = "SELECT * FROM tb_user ORDER BY hak_akses, id DESC LIMIT $awalData, $jumlahDataPerHalaman";
+    $sql = "SELECT * FROM tb_user WHERE deleted='0' ORDER BY hak_akses, id DESC LIMIT $awalData, $jumlahDataPerHalaman";
 }
 
 
@@ -67,5 +67,5 @@ $users = mysqli_query($conn, $sql);
         <?php endif; ?>
     </tbody>
 </table>
-<?php $jumData = mysqli_query($conn, "SELECT * FROM tb_user"); ?>
+<?php $jumData = mysqli_query($conn, "SELECT * FROM tb_user WHERE deleted='0'"); ?>
 <span class="ms-auto">Showing <?= mysqli_num_rows($users); ?> Data of <?= mysqli_num_rows($jumData); ?>.</span>
