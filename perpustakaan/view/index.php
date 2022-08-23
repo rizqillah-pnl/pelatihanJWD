@@ -137,22 +137,22 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
           </div>
           <div class="card-footer bg-white">
             <div class="row row-cols-1 row-cols-md-3 text-center" style="margin-left: 10px;">
-              <div class="col mb-sm-1 mb-3 border-start border-start-4 border-start-secondary px-3 mb-3">
+              <div class="col mb-sm-3 mb-3 border-start border-start-4 border-start-secondary px-3 mb-3">
                 <div class="text-medium-emphasis">Buku</div>
                 <div class="fw-semibold"><?= mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_buku WHERE deleted='0'")); ?> buku</div>
                 <!-- <div class="progress progress-thin mt-2">
                   <div class="progress-bar bg-success" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
                 </div> -->
               </div>
-              <div class="col mb-sm-1 mb-3 border-start border-start-4 border-start-success px-3 mb-3">
+              <div class="col mb-sm-3 mb-3 border-start border-start-4 border-start-success px-3 mb-3">
                 <div class="text-medium-emphasis">Anggota</div>
                 <div class="fw-semibold"><?= mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_anggota WHERE deleted='0'")); ?> member</div>
               </div>
-              <div class="col mb-sm-1 mb-3 border-start border-start-4 border-start-info px-3 mb-3">
+              <div class="col mb-sm-3 mb-3 border-start border-start-4 border-start-info px-3 mb-3">
                 <div class="text-medium-emphasis">Users</div>
                 <div class="fw-semibold"><?= mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_user")); ?> user</div>
               </div>
-              <div class="col mb-sm-1 mb-3 border-start border-start-4 border-start-danger px-3 mb-3">
+              <div class="col mb-sm-3 mb-2 border-start border-start-4 border-start-danger px-3 mb-3">
                 <div class="text-medium-emphasis">Transaksi</div>
                 <?php
                 $numPinjam = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_peminjaman WHERE deleted='0'"));
@@ -161,11 +161,11 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
                 ?>
                 <div class="fw-semibold"><?= $res; ?> transaksi</div>
               </div>
-              <div class="col mb-sm-1 mb-3 border-start border-start-4 border-start-success px-3 mb-3">
+              <div class="col mb-sm-3 mb-3 border-start border-start-4 border-start-success px-3 mb-3">
                 <div class="text-medium-emphasis">Peminjaman</div>
                 <div class="fw-semibold"><?= $numPinjam; ?> pinjam</div>
               </div>
-              <div class="col mb-sm-1 mb-3 border-start border-start-4 border-start-secondary px-3 mb-3">
+              <div class="col mb-sm-3 mb-3 border-start border-start-4 border-start-secondary px-3 mb-3">
                 <div class="text-medium-emphasis">Pengembalian</div>
                 <div class="fw-semibold"><?= $numKembali; ?> dikembalikan</div>
               </div>
