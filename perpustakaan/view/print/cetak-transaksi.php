@@ -74,4 +74,4 @@ $mpdf->AddPage("L");
 $mpdf->WriteHTML($html);
 
 $nameFile = "Data Transaksi - RZQ.pdf";
-$mpdf->Output($nameFile, \Mpdf\Output\Destination::INLINE);
+$mpdf->Output($nameFile, "I");

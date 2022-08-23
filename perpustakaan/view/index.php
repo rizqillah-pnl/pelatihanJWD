@@ -155,9 +155,10 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
               <div class="col mb-sm-3 mb-2 border-start border-start-4 border-start-danger px-3 mb-3">
                 <div class="text-medium-emphasis">Transaksi</div>
                 <?php
-                $numPinjam = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_peminjaman WHERE deleted='0'"));
+                $numPinjam = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_peminjaman WHERE deleted='0'")); ?>
+                <?php
                 $numKembali = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_pengembalian WHERE deleted='0'"));
-                $res = $numKembali + $numPinjam;
+                $res = mysqli_num_rows(mysqli_query($conn, "SELECT tb_pengembalian.id, tb_peminjaman.tanggal_pinjam, tb_peminjaman.keterangan, tb_peminjaman.status, tb_peminjaman.jumlah, tb_user.nama, tb_anggota.id_anggota, tb_anggota.nama as nama_member, tb_buku.id as id_buku, tb_buku.judul, tb_pengembalian.tanggal_kembali FROM tb_pengembalian LEFT JOIN tb_peminjaman ON tb_pengembalian.peminjaman_id=tb_peminjaman.id LEFT JOIN tb_buku ON tb_peminjaman.buku_id=tb_buku.id LEFT JOIN tb_anggota ON tb_anggota.id_anggota=tb_peminjaman.anggota_id LEFT JOIN tb_user ON tb_user.id=tb_peminjaman.user_id WHERE tb_peminjaman.deleted='0' AND tb_peminjaman.status='1' AND tb_pengembalian.deleted='0'"));
                 ?>
                 <div class="fw-semibold"><?= $res; ?> transaksi</div>
               </div>
