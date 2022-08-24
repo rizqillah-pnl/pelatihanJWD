@@ -62,7 +62,7 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
             <use xlink:href="../vendor/coreUI/vendors/@coreui/icons/svg/free.svg#cil-home"></use>
           </svg> Dashboard</a></li>
       <li class="nav-title">Menu</li>
-      <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
+      <li class="nav-group"><a class="nav-link nav-group-toggle" href="#!">
           <svg class="nav-icon">
             <use xlink:href="../vendor/coreUI/vendors/@coreui/icons/svg/free.svg#cil-monitor"></use>
           </svg> Master</a>
@@ -75,7 +75,7 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
         </ul>
       </li>
       <!-- <li class="nav-title">Data Transaksi</li> -->
-      <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
+      <li class="nav-group"><a class="nav-link nav-group-toggle" href="#!">
           <svg class="nav-icon">
             <use xlink:href="../vendor/coreUI/vendors/@coreui/icons/svg/free.svg#cil-money"></use>
           </svg> Transaksi</a>
@@ -136,37 +136,32 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
             </div>
           </div>
           <div class="card-footer bg-white">
-            <div class="row row-cols-1 row-cols-md-3 text-center" style="margin-left: 10px;">
-              <div class="col mb-sm-3 mb-3 border-start border-start-4 border-start-secondary px-3 mb-3">
+            <div class="row row-cols-1 row-cols-md-3 text-center mx-auto">
+              <div class="col mb-sm-3 mx-auto mb-3 border-start border-start-4 border-start-secondary px-3 mb-3">
                 <div class="text-medium-emphasis">Buku</div>
                 <div class="fw-semibold"><?= mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_buku WHERE deleted='0'")); ?> buku</div>
                 <!-- <div class="progress progress-thin mt-2">
                   <div class="progress-bar bg-success" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
                 </div> -->
               </div>
-              <div class="col mb-sm-3 mb-3 border-start border-start-4 border-start-success px-3 mb-3">
+              <div class="col mb-sm-3 mx-auto mb-3 border-start border-start-4 border-start-success px-3 mb-3">
                 <div class="text-medium-emphasis">Anggota</div>
                 <div class="fw-semibold"><?= mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_anggota WHERE deleted='0'")); ?> member</div>
               </div>
-              <div class="col mb-sm-3 mb-3 border-start border-start-4 border-start-info px-3 mb-3">
+              <div class="col mb-sm-3 mx-auto mb-3 border-start border-start-4 border-start-danger px-3 mb-3">
                 <div class="text-medium-emphasis">Users</div>
-                <div class="fw-semibold"><?= mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_user")); ?> user</div>
+                <div class="fw-semibold"><?= mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_user WHERE deleted='0'")); ?> user</div>
               </div>
-              <div class="col mb-sm-3 mb-2 border-start border-start-4 border-start-danger px-3 mb-3">
-                <div class="text-medium-emphasis">Transaksi</div>
-                <?php
-                $numPinjam = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_peminjaman WHERE deleted='0'")); ?>
-                <?php
-                $numKembali = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_pengembalian WHERE deleted='0'"));
-                $res = mysqli_num_rows(mysqli_query($conn, "SELECT tb_pengembalian.id, tb_peminjaman.tanggal_pinjam, tb_peminjaman.keterangan, tb_peminjaman.status, tb_peminjaman.jumlah, tb_user.nama, tb_anggota.id_anggota, tb_anggota.nama as nama_member, tb_buku.id as id_buku, tb_buku.judul, tb_pengembalian.tanggal_kembali FROM tb_pengembalian LEFT JOIN tb_peminjaman ON tb_pengembalian.peminjaman_id=tb_peminjaman.id LEFT JOIN tb_buku ON tb_peminjaman.buku_id=tb_buku.id LEFT JOIN tb_anggota ON tb_anggota.id_anggota=tb_peminjaman.anggota_id LEFT JOIN tb_user ON tb_user.id=tb_peminjaman.user_id WHERE tb_peminjaman.deleted='0' AND tb_peminjaman.status='1' AND tb_pengembalian.deleted='0'"));
-                ?>
-                <div class="fw-semibold"><?= $res; ?> transaksi</div>
-              </div>
-              <div class="col mb-sm-3 mb-3 border-start border-start-4 border-start-success px-3 mb-3">
+              <?php
+              $numPinjam = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_peminjaman WHERE deleted='0'")); ?>
+              <?php
+              $numKembali = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM tb_pengembalian WHERE deleted='0'"));
+              ?>
+              <div class="col mb-sm-3 mx-auto mb-3 border-start border-start-4 border-start-warning px-3 mb-3">
                 <div class="text-medium-emphasis">Peminjaman</div>
                 <div class="fw-semibold"><?= $numPinjam; ?> pinjam</div>
               </div>
-              <div class="col mb-sm-3 mb-3 border-start border-start-4 border-start-secondary px-3 mb-3">
+              <div class="col mb-sm-3 mx-auto mb-3 border-start border-start-4 border-start-primary px-3 mb-3">
                 <div class="text-medium-emphasis">Pengembalian</div>
                 <div class="fw-semibold"><?= $numKembali; ?> dikembalikan</div>
               </div>
@@ -444,7 +439,7 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
                                 <use xlink:href="../vendor/coreUI/vendors/@coreui/icons/svg/free.svg#cil-options"></use>
                               </svg>
                             </button>
-                            <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#">Info</a><a class="dropdown-item" href="#">Edit</a><a class="dropdown-item text-danger" href="#">Delete</a></div>
+                            <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#!">Info</a><a class="dropdown-item" href="#!">Edit</a><a class="dropdown-item text-danger" href="#!">Delete</a></div>
                           </div>
                         </td>
                       </tr>
@@ -488,7 +483,7 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
                                 <use xlink:href="../vendor/coreUI/vendors/@coreui/icons/svg/free.svg#cil-options"></use>
                               </svg>
                             </button>
-                            <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#">Info</a><a class="dropdown-item" href="#">Edit</a><a class="dropdown-item text-danger" href="#">Delete</a></div>
+                            <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#!">Info</a><a class="dropdown-item" href="#!">Edit</a><a class="dropdown-item text-danger" href="#!">Delete</a></div>
                           </div>
                         </td>
                       </tr>
@@ -532,7 +527,7 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
                                 <use xlink:href="../vendor/coreUI/vendors/@coreui/icons/svg/free.svg#cil-options"></use>
                               </svg>
                             </button>
-                            <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#">Info</a><a class="dropdown-item" href="#">Edit</a><a class="dropdown-item text-danger" href="#">Delete</a></div>
+                            <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#!">Info</a><a class="dropdown-item" href="#!">Edit</a><a class="dropdown-item text-danger" href="#!">Delete</a></div>
                           </div>
                         </td>
                       </tr>
@@ -576,7 +571,7 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
                                 <use xlink:href="../vendor/coreUI/vendors/@coreui/icons/svg/free.svg#cil-options"></use>
                               </svg>
                             </button>
-                            <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#">Info</a><a class="dropdown-item" href="#">Edit</a><a class="dropdown-item text-danger" href="#">Delete</a></div>
+                            <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#!">Info</a><a class="dropdown-item" href="#!">Edit</a><a class="dropdown-item text-danger" href="#!">Delete</a></div>
                           </div>
                         </td>
                       </tr>
@@ -620,7 +615,7 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
                                 <use xlink:href="../vendor/coreUI/vendors/@coreui/icons/svg/free.svg#cil-options"></use>
                               </svg>
                             </button>
-                            <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#">Info</a><a class="dropdown-item" href="#">Edit</a><a class="dropdown-item text-danger" href="#">Delete</a></div>
+                            <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#!">Info</a><a class="dropdown-item" href="#!">Edit</a><a class="dropdown-item text-danger" href="#!">Delete</a></div>
                           </div>
                         </td>
                       </tr>
@@ -664,7 +659,7 @@ $result = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM tb_user WHERE id
                                 <use xlink:href="../vendor/coreUI/vendors/@coreui/icons/svg/free.svg#cil-options"></use>
                               </svg>
                             </button>
-                            <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#">Info</a><a class="dropdown-item" href="#">Edit</a><a class="dropdown-item text-danger" href="#">Delete</a></div>
+                            <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#!">Info</a><a class="dropdown-item" href="#!">Edit</a><a class="dropdown-item text-danger" href="#!">Delete</a></div>
                           </div>
                         </td>
                       </tr>

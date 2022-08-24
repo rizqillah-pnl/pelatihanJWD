@@ -8,17 +8,22 @@ $kode = $_SESSION['user']['id'];
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if (isset($_POST['edit'])) {
         $nama = validasi($_POST['nama']);
+        if ($nama != "") {
 
-        if ($_FILES['foto']['error'] != "4") {
-            $foto = upload('user/');
-            $up = mysqli_query($conn, "UPDATE tb_user SET nama='$nama', foto='$foto' WHERE id='$kode'");
-        } else {
-            $up = mysqli_query($conn, "UPDATE tb_user SET nama='$nama' WHERE id='$kode'");
-        }
+            if ($_FILES['foto']['error'] != "4") {
+                $foto = upload('user/');
+                $up = mysqli_query($conn, "UPDATE tb_user SET nama='$nama', foto='$foto' WHERE id='$kode'");
+            } else {
+                $up = mysqli_query($conn, "UPDATE tb_user SET nama='$nama' WHERE id='$kode'");
+            }
 
-        if ($up) {
-            $_SESSION['pesan'] = 200;
-            header("Location: ../view/profile.php");
+            if ($up) {
+                $_SESSION['pesan'] = 200;
+                header("Location: ../view/profile.php");
+            } else {
+                $_SESSION['pesan'] = 300;
+                header("Location: ../view/profile.php");
+            }
         } else {
             $_SESSION['pesan'] = 300;
             header("Location: ../view/profile.php");

@@ -79,7 +79,7 @@ mysqli_query($conn, "UPDATE tb_user SET last_log='$now' WHERE id='$kode'");
                         <use xlink:href="../vendor/coreUI/vendors/@coreui/icons/svg/free.svg#cil-home"></use>
                     </svg> Dashboard</a></li>
             <li class="nav-title">Menu</li>
-            <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
+            <li class="nav-group"><a class="nav-link nav-group-toggle" href="#!">
                     <svg class="nav-icon">
                         <use xlink:href="../vendor/coreUI/vendors/@coreui/icons/svg/free.svg#cil-monitor"></use>
                     </svg> Master</a>
@@ -93,7 +93,7 @@ mysqli_query($conn, "UPDATE tb_user SET last_log='$now' WHERE id='$kode'");
                 </ul>
             </li>
             <!-- <li class="nav-title">Data Transaksi</li> -->
-            <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
+            <li class="nav-group"><a class="nav-link nav-group-toggle" href="#!">
                     <svg class="nav-icon">
                         <use xlink:href="../vendor/coreUI/vendors/@coreui/icons/svg/free.svg#cil-money"></use>
                     </svg> Transaksi</a>

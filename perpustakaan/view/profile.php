@@ -95,7 +95,7 @@ mysqli_query($conn, "UPDATE tb_user SET last_log='$now' WHERE id='$kode'");
                         <use xlink:href="../vendor/coreUI/vendors/@coreui/icons/svg/free.svg#cil-home"></use>
                     </svg> Dashboard</a></li>
             <li class="nav-title">Menu</li>
-            <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
+            <li class="nav-group"><a class="nav-link nav-group-toggle" href="#!">
                     <svg class="nav-icon">
                         <use xlink:href="../vendor/coreUI/vendors/@coreui/icons/svg/free.svg#cil-monitor"></use>
                     </svg> Master</a>
@@ -109,7 +109,7 @@ mysqli_query($conn, "UPDATE tb_user SET last_log='$now' WHERE id='$kode'");
                 </ul>
             </li>
             <!-- <li class="nav-title">Data Transaksi</li> -->
-            <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
+            <li class="nav-group"><a class="nav-link nav-group-toggle" href="#!">
                     <svg class="nav-icon">
                         <use xlink:href="../vendor/coreUI/vendors/@coreui/icons/svg/free.svg#cil-money"></use>
                     </svg> Transaksi</a>
@@ -180,6 +180,22 @@ mysqli_query($conn, "UPDATE tb_user SET last_log='$now' WHERE id='$kode'");
                                                 <input type="text" name="nama" class="form-control" id="nama" required maxlength="100" value="<?= $result['nama']; ?>" autofocus onfocus="var temp_value=this.value; this.value=''; this.value=temp_value">
                                             </div>
                                         </div>
+                                        <script>
+                                            $(document).ready(function() {
+                                                $('#nama').on('keyup', function() {
+                                                    let nama = $('#nama').val();
+                                                    let submit = document.getElementById('update');
+                                                    nama = nama.trim();
+
+                                                    if (nama == "") {
+                                                        submit.disabled = true;
+                                                    } else {
+                                                        submit.disabled = false;
+
+                                                    }
+                                                });
+                                            });
+                                        </script>
 
                                         <div class="form-group text-end">
                                             <div class="col-sm-12">
