@@ -290,7 +290,7 @@ mysqli_query($conn, "UPDATE tb_user SET last_log='$now' WHERE id='$kode'");
                                             <?php foreach ($users as $row) : ?>
                                                 <tr>
                                                     <td class="text-center"><?= $no = $no + 1; ?></td>
-                                                    <td class="text-center"><img src="../public/img/user/<?= $row['foto']; ?>" alt="Foto <?= $row['nama']; ?>" width="80" height="80"></td>
+                                                    <td class="text-center"><img src="../public/img/user/<?= $row['foto']; ?>" alt="Foto <?= $row['nama']; ?>" width="80" height="80" loading="lazy"></td>
                                                     <td class="text-center">USR<?= sprintf("%03d", $row['id']); ?></td>
                                                     <td><?= $row['nama']; ?></td>
                                                     <td class="text-center"><?= $row['username']; ?></td>

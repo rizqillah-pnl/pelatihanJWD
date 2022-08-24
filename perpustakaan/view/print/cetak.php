@@ -148,7 +148,7 @@ if (isset($_GET['id'])) {
         $html .= '
             <tr>
                 <td>' . $no++ . '</td>
-                <td><img src="../../public/img/anggota/' . $row['foto'] . '" width="120" height="120"></td>
+                <td><img src="../../public/img/anggota/' . $row['foto'] . '" width="120" height="120" loading="lazy"></td>
                 <td style="text-align: center; font-weight: bold;">AG0' . $row['id_anggota'] . '</td>
                 <td style="font-weight: bold;">' . $row['nama'] . '</td>
                 <td style="text-align: center;">' . $jkel . '</td>

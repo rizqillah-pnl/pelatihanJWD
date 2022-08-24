@@ -306,7 +306,7 @@ mysqli_query($conn, "UPDATE tb_user SET last_log='$now' WHERE id='$kode'");
                                                     <td class="text-center"><?= $no = $no + 1; ?></td>
                                                     <td>BK<?= sprintf("%04d", $row['id']); ?></td>
                                                     <td class="text-wrap" style="width: 200px;"><?= $row['judul']; ?></td>
-                                                    <td class="text-center"><img src="../public/img/buku/<?= $row['gambar']; ?>" alt="Sampul <?= $row['judul']; ?>" width="80" height="80"></td>
+                                                    <td class="text-center"><img src="../public/img/buku/<?= $row['gambar']; ?>" alt="Sampul <?= $row['judul']; ?>" width="80" height="80" loading="lazy"></td>
                                                     <td class="text-center"><?= $row['pengarang']; ?></td>
                                                     <td class="text-center"><?= $row['tahun_terbit']; ?></td>
                                                     <td class="text-center">

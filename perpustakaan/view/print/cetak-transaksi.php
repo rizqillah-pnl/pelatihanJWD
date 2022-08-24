@@ -10,9 +10,9 @@ $mpdf = new \Mpdf\Mpdf();
 $mpdf->SetTitle("Daftar Transaksi | RZQ Perpus");
 $mpdf->SetAuthor("RZQ Perpus");
 $mpdf->SetCreator("RZQ Perpus");
-$uri = $_SERVER['REQUEST_URI'];
+$url = $_SERVER['HTTP_HOST'];
+$uri = 'https://' . $url . $_SERVER['REQUEST_URI'];
 $mpdf->SetHTMLFooter($uri);
-
 
 $html = '
 <!DOCTYPE html>

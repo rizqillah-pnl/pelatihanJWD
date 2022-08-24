@@ -36,7 +36,7 @@ foreach ($data as $row) {
         <body>
             <div class="row">
                 <h1 style="margin-bottom: 20px;">' . $row['judul'] . '</h1>
-                <img src="../../public/img/buku/' . $row['gambar'] . '" width="300">
+                <img src="../../public/img/buku/' . $row['gambar'] . '" width="300" loading="lazy">
 
                 <table style="margin: auto;">
                     <tr>

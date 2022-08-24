@@ -46,7 +46,7 @@ $anggota = mysqli_query($conn, $sql);
                     <td class="text-center"><?= $no = $no + 1; ?></td>
                     <td>AG<?= sprintf("%03d", $row['id_anggota']); ?></td>
                     <td class="text-wrap" style="width: 200px;"><?= $row['nama']; ?></td>
-                    <td class="text-center"><img src="../public/img/anggota/<?= $row['foto']; ?>" alt="Profil <?= $row['nama']; ?>" width="80" height="80"></td>
+                    <td class="text-center"><img src="../public/img/anggota/<?= $row['foto']; ?>" alt="Profil <?= $row['nama']; ?>" width="80" height="80" loading="lazy"></td>
                     <td class="text-center"><?= ($row['jkel'] == "L") ? "Laki-laki" : "Perempuan"; ?></td>
                     <td class="text-wrap" style="width: 250px; text-align: justify;"><?= $row['alamat']; ?></td>
                     <td><?= $row['nohp']; ?></td>
