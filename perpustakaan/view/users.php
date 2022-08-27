@@ -192,7 +192,7 @@ mysqli_query($conn, "UPDATE tb_user SET last_log='$now' WHERE id='$kode'");
                                                     <h5 class="modal-title" id="TambahUserLabel">Tambah User</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
-                                                <form action="../model/tambah-user.php" method="POST" enctype="multipart/form-data">
+                                                <form action="../model/tambah-user.php" method="POST" enctype="multipart/form-data" autocomplete="off">
                                                     <div class="modal-body">
                                                         <div class="mb-3 row">
                                                             <label class="col-md-4 col-form-label" for="foto">Foto Profil <span class="text-danger">*</span></label>
@@ -206,18 +206,30 @@ mysqli_query($conn, "UPDATE tb_user SET last_log='$now' WHERE id='$kode'");
                                                             <label for="username" class="col-md-4 col-form-label">Username <span class="text-danger">*</span></label>
                                                             <div class="col-sm-8">
                                                                 <input type="text" name="username" class="form-control" id="username" required maxlength="100" aria-describedby="inputGroupPrepend3 validationUsername">
-                                                                <div class="invalid-feedback" id="validationUsername">Username sudah digunakan!</div>
+                                                                <div class="invalid-feedback" id="validationUsername"></div>
                                                             </div>
 
                                                             <script>
                                                                 $(document).ready(function() {
                                                                     $('#username').on('keyup', function() {
                                                                         let data = $('#username');
+                                                                        let submit = document.getElementById('tambah');
 
                                                                         $.get("ajax-view/cek-username.php?search=" + data.val(), function(res) {
                                                                             if (res == false) {
                                                                                 data.addClass('is-invalid');
+                                                                                document.getElementById('validationUsername').innerHTML = "Username sudah digunakan!";
+                                                                                submit.disabled = true;
+                                                                            } else if (data.val() == "") {
+                                                                                data.addClass('is-invalid');
+                                                                                document.getElementById('validationUsername').innerHTML = "Field username tidak boleh kosong!";
+                                                                                submit.disabled = true;
+                                                                            } else if (data.val().length < 3) {
+                                                                                data.addClass('is-invalid');
+                                                                                document.getElementById('validationUsername').innerHTML = "Username harus lebih dari 3 huruf!";
+                                                                                submit.disabled = true;
                                                                             } else {
+                                                                                submit.disabled = false;
                                                                                 data.removeClass('is-invalid');
                                                                             }
                                                                         });
@@ -228,7 +240,7 @@ mysqli_query($conn, "UPDATE tb_user SET last_log='$now' WHERE id='$kode'");
                                                         <div class=" mb-3 row">
                                                             <label for="password" class="col-md-4 col-form-label">password <span class="text-danger">*</span></label>
                                                             <div class="col-sm-8">
-                                                                <input type="text" maxlength="200" name="password" id="password" required class="form-control">
+                                                                <input type="password" maxlength="200" name="password" id="password" required class="form-control">
                                                             </div>
                                                         </div>
                                                         <div class="mb-3 row">
@@ -244,7 +256,7 @@ mysqli_query($conn, "UPDATE tb_user SET last_log='$now' WHERE id='$kode'");
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                                                        <button type="submit" name="tambah" id="tambah" class="btn btn-primary">Simpan</button>
+                                                        <button type="submit" name="tambah" id="tambah" class="btn btn-primary" disabled>Simpan</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -296,7 +308,9 @@ mysqli_query($conn, "UPDATE tb_user SET last_log='$now' WHERE id='$kode'");
                                                     <td class="text-center"><?= $row['username']; ?></td>
                                                     <td class="text-center"><?= ($row['hak_akses'] == "1") ? "Admin" : "Operator"; ?></td>
                                                     <td class="text-center">
-                                                        <button class="btn btn-warning text-white mb-2" data-bs-toggle="modal" data-bs-target="#Edit<?= $row['id']; ?>"><i class="bi bi-pencil"></i></button>
+                                                        <?php if ($row['id'] != $result['id']) : ?>
+                                                            <button class="btn btn-warning text-white mb-2" data-bs-toggle="modal" data-bs-target="#Edit<?= $row['id']; ?>"><i class="bi bi-pencil"></i></button>
+                                                        <?php endif; ?>
 
                                                         <?php if ($row['hak_akses'] != "1") : ?>
                                                             <button class="btn btn-danger text-white mb-2" data-bs-toggle="modal" data-bs-target="#Hapus<?= $row['id']; ?>"><i class="bi bi-trash"></i></button>
@@ -367,6 +381,9 @@ mysqli_query($conn, "UPDATE tb_user SET last_log='$now' WHERE id='$kode'");
 
     <?php $users = mysqli_query($conn, "SELECT * FROM tb_user WHERE deleted='0'"); ?>
     <?php foreach ($users as $row) : ?>
+        <?php if ($row['id'] == $result['id']) {
+            continue;
+        } ?>
         <!-- Modal Edit User -->
         <div class="modal fade " id="Edit<?= $row['id']; ?>" tabindex="-1" aria-labelledby="EditUser" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -375,7 +392,7 @@ mysqli_query($conn, "UPDATE tb_user SET last_log='$now' WHERE id='$kode'");
                         <h5 class="modal-title" id="EditUser">Edit User</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form action="../model/edit-user.php" method="POST" enctype="multipart/form-data">
+                    <form action="../model/edit-user.php" method="POST" enctype="multipart/form-data" autocomplete="off">
                         <input type="hidden" name="id" value="<?= $row['id']; ?>">
                         <div class="modal-body">
                             <div class="mb-3 row">
@@ -390,8 +407,7 @@ mysqli_query($conn, "UPDATE tb_user SET last_log='$now' WHERE id='$kode'");
                                 <label for="nama<?= $row['id']; ?>" class="col-md-4 col-form-label">Nama <span class="text-danger">*</span></label>
                                 <div class="col-sm-8">
                                     <input type="text" value="<?= $row['nama']; ?>" name="nama" class="form-control" id="nama<?= $row['id']; ?>" required maxlength="200" aria-describedby="validationNama">
-                                    <div id="validationNama" class="invalid-feedback">
-                                        Field tidak boleh kosong!
+                                    <div id="validationNama<?= $row['id']; ?>" class="invalid-feedback">
                                     </div>
                                 </div>
                             </div>
@@ -401,27 +417,37 @@ mysqli_query($conn, "UPDATE tb_user SET last_log='$now' WHERE id='$kode'");
 
                                     $('#nama' + id).on('keyup', function() {
                                         let data = $('#nama' + id);
+                                        let submit = document.getElementById('edit' + id);
 
                                         if (data.val() == "") {
                                             data.addClass('is-invalid');
+                                            document.getElementById('validationNama' + id).innerHTML = "Field nama tidak boleh kosong!";
+                                            submit.disabled = true;
+                                        } else if (data.val().length < 3) {
+                                            data.addClass('is-invalid');
+                                            document.getElementById('validationNama' + id).innerHTML = "Nama harus lebih dari 3 huruf!";
+                                            submit.disabled = true;
                                         } else {
+                                            submit.disabled = false;
                                             data.removeClass('is-invalid');
                                         }
                                     })
                                 });
                             </script>
 
-                            <div class="mb-3 row">
-                                <label for="password<?= $row['id']; ?>" class="col-md-4 col-form-label">Ganti Password</label>
-                                <div class="col-sm-8">
-                                    <input type="password" name="password" class="form-control" id="password<?= $row['id']; ?>" maxlength="200">
-                                    <div class="form-text text-info">Boleh dikosongkan!</div>
+                            <?php if ($row['hak_akses'] != "1") : ?>
+                                <div class="mb-3 row">
+                                    <label for="password<?= $row['id']; ?>" class="col-md-4 col-form-label">Ganti Password</label>
+                                    <div class="col-sm-8">
+                                        <input type="password" name="password" class="form-control" id="password<?= $row['id']; ?>" maxlength="200">
+                                        <div class="form-text text-info">Boleh dikosongkan!</div>
+                                    </div>
                                 </div>
-                            </div>
+                            <?php endif; ?>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                            <button type="submit" name="edit" class="btn btn-primary">Simpan</button>
+                            <button type="submit" name="edit" id="edit<?= $row['id']; ?>" class="btn btn-primary">Simpan</button>
                         </div>
                     </form>
                 </div>
@@ -439,6 +465,7 @@ mysqli_query($conn, "UPDATE tb_user SET last_log='$now' WHERE id='$kode'");
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
+                            <img src="../public/img/user/<?= $row['foto']; ?>" alt="Profil" width="200" class="d-block mx-auto img-thumbnail rounded">
                             Anda yakin ingin menghapus akun <strong><?= $row['nama']; ?></strong>?
                         </div>
                         <div class="modal-footer">

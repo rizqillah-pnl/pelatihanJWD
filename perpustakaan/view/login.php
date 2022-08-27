@@ -44,7 +44,7 @@ if (isset($_SESSION['user'])) {
               <div class="card-body">
                 <h1 class="text-center">Login</h1>
                 <p class="text-medium-emphasis text-center mb-5">Sign in With Your Account!</p>
-                <form action="../model/login.php" method="post">
+                <form action="../model/login.php" method="post" autocomplete="off">
                   <div class="input-group mb-3"><span class="input-group-text">
                       <svg class="icon">
                         <use xlink:href="../vendor/coreUI/vendors/@coreui/icons/svg/free.svg#cil-user"></use>
@@ -94,7 +94,7 @@ if (isset($_SESSION['user'])) {
                 </form>
               </div>
             </div>
-            <div class="card col-md-5 text-white bg-primary py-5">
+            <div class="card d-none d-lg-block d-md-block col-md-5 text-white bg-primary py-5">
               <div class="card-body text-center">
                 <div>
                   <h3>RIZQILLAH LIBRARY</h3>

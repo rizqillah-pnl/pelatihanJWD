@@ -187,7 +187,7 @@ mysqli_query($conn, "UPDATE tb_user SET last_log='$now' WHERE id='$kode'");
                                                     <h5 class="modal-title" id="TambahUserLabel">Tambah Buku</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
-                                                <form action="../model/tambah-buku.php" method="POST" enctype="multipart/form-data">
+                                                <form action="../model/tambah-buku.php" method="POST" enctype="multipart/form-data" autocomplete="off">
                                                     <div class="modal-body">
                                                         <div class="mb-3 row">
                                                             <label class="col-md-4 col-form-label" for="foto">Sampul <span class="text-danger">*</span></label>
@@ -387,11 +387,11 @@ mysqli_query($conn, "UPDATE tb_user SET last_log='$now' WHERE id='$kode'");
                         <h5 class="modal-title" id="EditBuku">Edit Buku</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form action="../model/edit-buku.php" method="POST" enctype="multipart/form-data">
+                    <form action="../model/edit-buku.php" method="POST" enctype="multipart/form-data" autocomplete="off">
                         <input type="hidden" name="id" value="<?= $row['id']; ?>">
                         <div class="modal-body">
                             <div class="mb-3 row">
-                                <label class="col-md-4 col-form-label" for="foto<?= $row['id']; ?>">Foto <span class="text-danger">*</span></label>
+                                <label class="col-md-4 col-form-label" for="foto<?= $row['id']; ?>">Foto</label>
                                 <div class="col-sm-8" id="preview<?= $row['id']; ?>">
                                     <input type="file" name="foto" id="foto<?= $row['id']; ?>" class="form-control" onchange="validateImg(this, 'edit', 'foto<?= $row['id']; ?>', 'preview<?= $row['id']; ?>', 'fotoFeedback<?= $row['id']; ?>')" aria-describedby="fotoFeedback" accept="image/*">
                                     <div id="fotoFeedback<?= $row['id']; ?>" class="invalid-feedback"></div>
@@ -474,7 +474,8 @@ mysqli_query($conn, "UPDATE tb_user SET last_log='$now' WHERE id='$kode'");
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        Anda yakin ingin menghapus buku <strong><?= $row['judul']; ?></strong>?
+                        <img src="../public/img/buku/<?= $row['gambar']; ?>" alt="Sampul" width="150" class="mx-auto d-block img-thumbnail rounded" loading="lazy">
+                        <p>Anda yakin ingin menghapus buku <strong><?= $row['judul']; ?></strong> dengan ID <strong>BK<?= sprintf("%04d", $row['id']); ?></strong>?</p>
                     </div>
                     <div class="modal-footer">
                         <form action="../model/delete-buku.php" method="POST">
@@ -497,7 +498,9 @@ mysqli_query($conn, "UPDATE tb_user SET last_log='$now' WHERE id='$kode'");
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <img src="../public/img/buku/<?= $row['gambar']; ?>" alt="Sampul <?= $row['judul']; ?>" class="img-thumbnail rounded mx-auto d-block mb-5" width="200px">
+                        <img src="../public/img/buku/<?= $row['gambar']; ?>" alt="Sampul <?= $row['judul']; ?>" class="img-thumbnail rounded mx-auto d-block" width="200px">
+                        <hr>
+                        <h5 class="text-center mb-5"><?= $row['judul']; ?></h5>
 
                         <table class="table">
                             <tr>
@@ -505,14 +508,7 @@ mysqli_query($conn, "UPDATE tb_user SET last_log='$now' WHERE id='$kode'");
                                     Kode Buku
                                 </td>
                                 <td> : </td>
-                                <td>BK<?= $row['id']; ?></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Judul Buku
-                                </td>
-                                <td> : </td>
-                                <td><?= $row['judul']; ?></td>
+                                <td>BK<?= sprintf("%04d", $row['id']); ?></td>
                             </tr>
                             <tr>
                                 <td>

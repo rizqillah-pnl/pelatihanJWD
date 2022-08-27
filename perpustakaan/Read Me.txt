@@ -1,0 +1,10 @@
+Langkah instalasi :
+1. Jalankan Xampp dan start php beserta mysql
+2. Buka localhost/phpmyadmin atau 127.0.0.1/phpmyadmin di url browser anda
+3. Buat database baru dengan nama dbperpus_jwd, kemudian import file dbperpus_jwd.sql dalam folder ke database baru tersebut
+4. Simpan folder perpustakaan di htdocs server anda
+5. Ketik di url dengan localhost/perpustakaan
+
+akun yang tersedia :
+1. admin | admin
+2. rizqi | 123

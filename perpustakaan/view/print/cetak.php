@@ -1,8 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
+
 require_once '../../vendor/autoload.php';
 include '../../controller/koneksi.php';
 
+
+use chillerlan\QRCode\QRCode;
+use chillerlan\QRCode\QROptions;
 
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
@@ -13,6 +19,17 @@ if (isset($_GET['id'])) {
     $mpdf->SetAuthor("RZQ Perpus");
     $mpdf->SetCreator("RZQ Perpus");
     $jkel = ($row['jkel'] == "L") ? "Laki-laki" : "Perempuan";
+    $url = $_SERVER['HTTP_HOST'];
+
+    // buat QR Code dari vendor pihak ketiga
+    $options = new QROptions(
+        [
+            'eccLevel' => QRCode::ECC_L,
+            'outputType' => QRCode::OUTPUT_MARKUP_SVG,
+            'version' => 5,
+        ]
+    );
+    $qrcode = (new QRCode($options))->render($url . "/cek.php?id=" . $id);
 
     if ($row != NULL) {
         $html = '
@@ -49,6 +66,9 @@ if (isset($_GET['id'])) {
                     border: 1px solid black;
                     padding: 5px;
                 }
+                p{
+                    margin: 0;
+                }
             </style>
             </head>
             <body>
@@ -59,8 +79,10 @@ if (isset($_GET['id'])) {
                         <div class="card mb-3" style="max-width: 540px;">
                             <div class="row g-0">
                                 <div>
-                                    <h2>AG0' . $row['id_anggota'] . '</h2>
-                                    <img src="../../public/img/anggota/' . $row['foto'] . '" class="img-fluid rounded-start" alt="..." width="120" height="120">
+                                    <h2>AG' . sprintf("%03d", $row['id_anggota']) . '</h2>
+                                    <div style="width: 150px; height: 150px; background-image: url(' . $qrcode . '); background-repeat: no-repeat;  background-size: contain; margin: auto;">
+                                    </div>
+                                    <div style="margin: 10px auto 0; width: 70px; height: 80px; background-image: url(../../public/img/anggota/' . $row['foto'] . '); background-size: cover; background-repeat: no-repeat; background-position: center;"></div>
                                 </div>
                                 <div>
                                     <div>
@@ -73,7 +95,7 @@ if (isset($_GET['id'])) {
                             </div>
                         </div>
                     </div>
-                    <span style="font-size: 10px; color: blue;">rzq-perpus.epizy.com/cek/ag0' . $row['id_anggota'] . '</span>
+                    <span style="font-size: 10px; color: blue;">' . $url . '/cek.php?id=' . $row['id_anggota'] . '</span>
                 </div>
             </body>
             </html>
@@ -149,7 +171,7 @@ if (isset($_GET['id'])) {
             <tr>
                 <td>' . $no++ . '</td>
                 <td><img src="../../public/img/anggota/' . $row['foto'] . '" width="120" height="120" loading="lazy"></td>
-                <td style="text-align: center; font-weight: bold;">AG0' . $row['id_anggota'] . '</td>
+                <td style="text-align: center; font-weight: bold;">AG' . sprintf("%03d", $row['id_anggota']) . '</td>
                 <td style="font-weight: bold;">' . $row['nama'] . '</td>
                 <td style="text-align: center;">' . $jkel . '</td>
                 <td>' . $row['alamat'] . '</td>

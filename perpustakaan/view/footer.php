@@ -69,6 +69,24 @@
              return false;
          return true;
      }
+
+     function changePic(buku) {
+         let bookID = buku.value;
+         let picBook = document.getElementById('picBook');
+
+         $.get("ajax-view/getPicBook.php?search=" + bookID, function(data) {
+             picBook.src = "../public/img/buku/" + data;
+         })
+     }
+
+     function profilChange(prof) {
+         let id = prof.value;
+         let picUser = document.getElementById('picUser');
+
+         $.get("ajax-view/getPicUser.php?search=" + id, function(data) {
+             picUser.src = "../public/img/anggota/" + data;
+         })
+     }
  </script>
 
 
@@ -77,8 +95,4 @@
  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js" integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK" crossorigin="anonymous"></script>
  <script src="../vendor/coreUI/vendors/simplebar/js/simplebar.min.js"></script>
- <!-- Plugins and scripts required by this view-->
- <!-- <script src="../vendor/coreUI/vendors/chart.js/js/chart.min.js"></script> -->
- <!-- <script src="../vendor/coreUI/vendors/@coreui/chartjs/js/coreui-chartjs.js"></script> -->
  <script src="../vendor/coreUI/vendors/@coreui/utils/js/coreui-utils.js"></script>
- <!-- <script src="../public//js/main.js"></script> -->

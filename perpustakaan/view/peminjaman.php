@@ -208,26 +208,60 @@ mysqli_query($conn, "UPDATE tb_user SET last_log='$now' WHERE id='$kode'");
                                                         <div class=" mb-3 row">
                                                             <label for="buku" class="col-md-4 col-form-label">Buku <span class="text-danger">*</span></label>
                                                             <div class="col-sm-8">
-                                                                <select name="buku" id="buku" class="form-select">
-                                                                    <?php $books = mysqli_query($conn, "SELECT * FROM tb_buku WHERE deleted='0'"); ?>
-                                                                    <?php foreach ($books as $row) : ?>
-                                                                        <?php if ($row['jumlah_stok'] == 0) : ?>
-                                                                            <?php continue; ?>
-                                                                        <?php endif; ?>
-                                                                        <option value="<?= $row['id']; ?>">BK<?= sprintf("%04d", $row['id']); ?> - <?= $row['judul']; ?></option>
-                                                                    <?php endforeach; ?>
-                                                                </select>
+                                                                <?php $books = mysqli_query($conn, "SELECT * FROM tb_buku WHERE deleted='0'"); ?>
+                                                                <?php if (mysqli_num_rows($books) != 0) : ?>
+                                                                    <select name="buku" id="buku" class="form-select" onchange="changePic(this)">
+                                                                        <?php foreach ($books as $row) : ?>
+                                                                            <?php if ($row['jumlah_stok'] == 0) : ?>
+                                                                                <?php continue; ?>
+                                                                            <?php endif; ?>
+                                                                            <option value="<?= $row['id']; ?>">BK<?= sprintf("%04d", $row['id']); ?> - <?= $row['judul']; ?></option>
+                                                                        <?php endforeach; ?>
+                                                                    </select>
+                                                                <?php else : ?>
+                                                                    <input type="text" disabled value="Data Tidak Ada" class="form-control">
+                                                                <?php endif; ?>
+                                                                <?php
+                                                                $books = mysqli_query($conn, "SELECT * FROM tb_buku WHERE deleted='0'");
+                                                                if (mysqli_num_rows($books) != 0) {
+                                                                    $pic = mysqli_fetch_assoc($books);
+                                                                    // var_dump($pic);
+                                                                    $pic = "../public/img/buku/" . $pic['gambar'];
+                                                                    $class = "";
+                                                                } else {
+                                                                    $pic = null;
+                                                                    $class = "d-none";
+                                                                }
+                                                                ?>
+                                                                <img src="<?= $pic; ?>" alt="Sampul Buku" width="100" height="100" class="mt-3 <?= $class; ?>" id="picBook">
                                                             </div>
                                                         </div>
                                                         <div class=" mb-3 row">
                                                             <label for="anggota" class="col-md-4 col-form-label">Anggota <span class="text-danger">*</span></label>
                                                             <div class="col-sm-8">
-                                                                <select name="anggota" id="anggota" class="form-select" placeholder="Pilih Anggota . . .">
-                                                                    <?php $members = mysqli_query($conn, "SELECT * FROM tb_anggota WHERE deleted='0'"); ?>
-                                                                    <?php foreach ($members as $row) : ?>
-                                                                        <option value="<?= $row['id_anggota']; ?>">AGT<?= sprintf("%03d", $row['id_anggota']); ?> - <?= $row['nama']; ?></option>
-                                                                    <?php endforeach; ?>
-                                                                </select>
+                                                                <?php $members = mysqli_query($conn, "SELECT * FROM tb_anggota WHERE deleted='0'"); ?>
+                                                                <?php if (mysqli_num_rows($members) != 0) : ?>
+                                                                    <select name="anggota" id="anggota" class="form-select" placeholder="Pilih Anggota . . ." onchange="profilChange(this)">
+                                                                        <?php foreach ($members as $row) : ?>
+                                                                            <option value="<?= $row['id_anggota']; ?>">AGT<?= sprintf("%03d", $row['id_anggota']); ?> - <?= $row['nama']; ?></option>
+                                                                        <?php endforeach; ?>
+                                                                    </select>
+                                                                <?php else : ?>
+                                                                    <input type="text" disabled value="Data Tidak Ada" class="form-control">
+                                                                <?php endif; ?>
+
+                                                                <?php
+                                                                $members = mysqli_query($conn, "SELECT * FROM tb_anggota WHERE deleted='0'");
+                                                                if (mysqli_num_rows($members) != 0) {
+                                                                    $pic = mysqli_fetch_assoc($members);
+                                                                    $pic = "../public/img/anggota/" . $pic['foto'];
+                                                                    $class = "";
+                                                                } else {
+                                                                    $pic = null;
+                                                                    $class = "d-none";
+                                                                }
+                                                                ?>
+                                                                <img src="<?= $pic; ?>" alt="Profil" width="100" height="100" class="mt-3 <?= $class; ?>" id="picUser">
                                                             </div>
                                                         </div>
                                                         <div class="mb-3 row">
@@ -414,6 +448,12 @@ mysqli_query($conn, "UPDATE tb_user SET last_log='$now' WHERE id='$kode'");
                                 <label for="kode<?= $row['id']; ?>" class="col-md-4 col-form-label">Kode Peminjaman</label>
                                 <div class="col-sm-8">
                                     <input type="text" value="PJM<?= sprintf("%03d", $row['id']); ?>" class="form-control" disabled>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="tgl" class="col-md-4 col-form-label">Tanggal Pengembalian</label>
+                                <div class="col-sm-8">
+                                    <input type="date" name="tgl" class="form-control" disabled value="<?= date('Y-m-d'); ?>">
                                 </div>
                             </div>
 

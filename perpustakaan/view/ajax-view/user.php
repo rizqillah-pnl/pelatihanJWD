@@ -52,7 +52,9 @@ $users = mysqli_query($conn, $sql);
                     <td class="text-center"><?= $row['username']; ?></td>
                     <td class="text-center"><?= ($row['hak_akses'] == "1") ? "Admin" : "Operator"; ?></td>
                     <td class="text-center">
-                        <button class="btn btn-warning text-white mb-2" data-bs-toggle="modal" data-bs-target="#Edit<?= $row['id']; ?>"><i class="bi bi-pencil"></i></button>
+                        <?php if ($row['id'] != $result['id']) : ?>
+                            <button class="btn btn-warning text-white mb-2" data-bs-toggle="modal" data-bs-target="#Edit<?= $row['id']; ?>"><i class="bi bi-pencil"></i></button>
+                        <?php endif; ?>
 
                         <?php if ($row['hak_akses'] != "1") : ?>
                             <button class="btn btn-danger text-white mb-2" data-bs-toggle="modal" data-bs-target="#Hapus<?= $row['id']; ?>"><i class="bi bi-trash"></i></button>

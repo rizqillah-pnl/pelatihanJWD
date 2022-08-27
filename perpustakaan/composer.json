@@ -1,6 +1,7 @@
 {
     "require": {
         "dompdf/dompdf": "^2.0",
-        "mpdf/mpdf": "^8.1"
+        "mpdf/mpdf": "^8.1",
+        "chillerlan/php-qrcode": "^4.3"
     }
 }

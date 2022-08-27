@@ -193,7 +193,7 @@ mysqli_query($conn, "UPDATE tb_user SET last_log='$now' WHERE id='$kode'");
                                                     <h5 class="modal-title" id="TambahUserLabel">Tambah Anggota</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
-                                                <form action="../model/tambah-anggota.php" method="POST" enctype="multipart/form-data">
+                                                <form action="../model/tambah-anggota.php" method="POST" enctype="multipart/form-data" autocomplete="off">
                                                     <div class="modal-body">
                                                         <div class="mb-3 row">
                                                             <label class="col-md-4 col-form-label" for="foto">Foto <span class="text-danger">*</span></label>
@@ -212,8 +212,28 @@ mysqli_query($conn, "UPDATE tb_user SET last_log='$now' WHERE id='$kode'");
                                                         <div class="mb-3 row">
                                                             <label for="nohp" class="col-md-4 col-form-label">No HP <span class="text-danger">*</span></label>
                                                             <div class="col-sm-8">
-                                                                <input type="text" name="nohp" class="form-control" id="nohp" required maxlength="15" onkeypress="return toNumber(event)">
+                                                                <input type="tel" name="nohp" class="form-control" id="nohp" required maxlength="15" onkeypress="return toNumber(event)" pattern="^(\+62|62|0)8[1-9][0-9]{7,12}$">
+                                                                <div class="invalid-feedback" id="hp">
+                                                                    Nomor HP tidak valid!
+                                                                </div>
+                                                                <script>
+                                                                    $(document).ready(function() {
+                                                                        $('#nohp').on('keyup', function() {
+                                                                            let nohp = document.getElementById('nohp');
+                                                                            let submit = document.getElementById('tambah');
+
+                                                                            if (!nohp.value.match(/^(^\+62|62|0)8[1-9][0-9]{7,12}$/g)) {
+                                                                                submit.disabled = true;
+                                                                                nohp.classList.add('is-invalid');
+                                                                            } else {
+                                                                                submit.disabled = false;
+                                                                                nohp.classList.remove('is-invalid');
+                                                                            }
+                                                                        });
+                                                                    });
+                                                                </script>
                                                             </div>
+
                                                         </div>
                                                         <div class="mb-3 row">
                                                             <label class="col-md-4 col-form-label">Jenis Kelamin <span class="text-danger">*</span></label>
@@ -368,11 +388,11 @@ mysqli_query($conn, "UPDATE tb_user SET last_log='$now' WHERE id='$kode'");
                         <h5 class="modal-title" id="TambahUserLabel">Edit Anggota</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form action="../model/edit-anggota.php" method="POST" enctype="multipart/form-data">
+                    <form action="../model/edit-anggota.php" method="POST" enctype="multipart/form-data" autocomplete="off">
                         <input type="hidden" name="idAnggota" value="<?= $row['id_anggota']; ?>">
                         <div class="modal-body">
                             <div class="mb-3 row">
-                                <label class="col-md-4 col-form-label" for="foto<?= $row['id_anggota']; ?>">Foto <span class="text-danger">*</span></label>
+                                <label class="col-md-4 col-form-label" for="foto<?= $row['id_anggota']; ?>">Foto </label>
                                 <div class="col-sm-8" id="preview<?= $row['id_anggota']; ?>">
                                     <input type="file" name="foto" id="foto<?= $row['id_anggota']; ?>" class="form-control" onchange="validateImg(this, 'edit', 'foto<?= $row['id_anggota']; ?>', 'preview<?= $row['id_anggota']; ?>', 'fotoFeedback<?= $row['id_anggota']; ?>')" aria-describedby="fotoFeedback" accept="image/*">
                                     <div id="fotoFeedback<?= $row['id_anggota']; ?>" class="invalid-feedback"></div>
@@ -388,8 +408,28 @@ mysqli_query($conn, "UPDATE tb_user SET last_log='$now' WHERE id='$kode'");
                             <div class="mb-3 row">
                                 <label for="nohp<?= $row['id_anggota']; ?>" class="col-md-4 col-form-label">No HP <span class="text-danger">*</span></label>
                                 <div class="col-sm-8">
-                                    <input type="text" name="nohp" class="form-control" id="nohp<?= $row['id_anggota']; ?>" required maxlength="15" onkeypress="return toNumber(event)" value="<?= $row['nohp']; ?>">
+                                    <input type="tel" name="nohp" class="form-control" id="nohp<?= $row['id_anggota']; ?>" required maxlength="15" onkeypress="return toNumber(event)" value="<?= $row['nohp']; ?>" pattern="^(\+62|62|0)8[1-9][0-9]{7,12}$">
+                                    <div class="invalid-feedback">
+                                        Nomor HP tidak valid!
+                                    </div>
                                 </div>
+                                <script>
+                                    $(document).ready(function() {
+                                        let id = "<?= $row['id_anggota']; ?>";
+                                        $('#nohp' + id).on('keyup', function() {
+                                            let nohp = document.getElementById('nohp' + id);
+                                            let submit = document.getElementById('edit' + id);
+
+                                            if (!nohp.value.match(/^(^\+62|62|0)8[1-9][0-9]{7,12}$/g)) {
+                                                submit.disabled = true;
+                                                nohp.classList.add('is-invalid');
+                                            } else {
+                                                submit.disabled = false;
+                                                nohp.classList.remove('is-invalid');
+                                            }
+                                        });
+                                    });
+                                </script>
                             </div>
                             <div class="mb-3 row">
                                 <label class="col-md-4 col-form-label">Jenis Kelamin <span class="text-danger">*</span></label>
@@ -412,7 +452,7 @@ mysqli_query($conn, "UPDATE tb_user SET last_log='$now' WHERE id='$kode'");
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                            <button type="submit" name="edit" id="edit" class="btn btn-primary">Simpan</button>
+                            <button type="submit" name="edit" id="edit<?= $row['id_anggota']; ?>" class="btn btn-primary">Simpan</button>
                         </div>
                     </form>
                 </div>
@@ -429,7 +469,8 @@ mysqli_query($conn, "UPDATE tb_user SET last_log='$now' WHERE id='$kode'");
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        Anda yakin ingin menghapus anggota dengan nama <strong><?= $row['nama']; ?></strong>?
+                        <img src="../public/img/anggota/<?= $row['foto']; ?>" alt="Profil" width="100" loading="lazy" class="mx-auto d-block rounded img-thumbnail">
+                        <p>Anda yakin ingin menghapus anggota dengan nama <strong><?= $row['nama']; ?></strong>?</p>
                     </div>
                     <div class="modal-footer">
                         <form action="../model/delete-anggota.php" method="POST">
