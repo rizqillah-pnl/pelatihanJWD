@@ -217,7 +217,7 @@ if (isset($_GET['id'])) :
           </div>
 
           <script>
-            var time = 15;
+            var time = 10;
             setInterval(function() {
               var seconds = time % 60;
               var minutes = (time - seconds) / 60;
